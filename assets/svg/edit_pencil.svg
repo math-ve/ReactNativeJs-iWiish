@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21.508" height="21.508" viewBox="0 0 21.508 21.508">
+  <defs>
+    <linearGradient id="linear-gradient" x1="1" y1="0.101" x2="0.137" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ff5791"/>
+      <stop offset="1" stop-color="#fa7a47"/>
+    </linearGradient>
+  </defs>
+  <path id="Icon_metro-pencil" data-name="Icon metro-pencil" d="M20.718,1.928a3.361,3.361,0,0,1,2.689,5.377L22.063,8.649l-4.7-4.7L18.7,2.6a3.345,3.345,0,0,1,2.016-.672ZM3.915,17.387,2.571,23.436,8.62,22.092,21.054,9.658l-4.7-4.7ZM17.6,9.565l-9.41,9.41L7.032,17.816l9.41-9.41L17.6,9.565Z" transform="translate(-2.571 -1.928)" fill="url(#linear-gradient)"/>
+</svg>

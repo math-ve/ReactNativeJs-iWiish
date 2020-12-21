@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="29.233" height="29.712" viewBox="0 0 29.233 29.712">
+  <defs>
+    <linearGradient id="linear-gradient" x1="1" x2="0.297" y2="0.781" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ff6b53"/>
+      <stop offset="1" stop-color="#fc9a8b"/>
+    </linearGradient>
+  </defs>
+  <path id="Icon_awesome-google" data-name="Icon awesome-google" d="M29.233,15.766c0,8.476-5.8,14.508-14.377,14.508a14.856,14.856,0,0,1,0-29.712A14.286,14.286,0,0,1,24.818,4.45L20.774,8.338c-5.289-5.1-15.125-1.27-15.125,7.081A9.306,9.306,0,0,0,14.856,24.8c5.882,0,8.087-4.217,8.434-6.4H14.856v-5.11H29A13.024,13.024,0,0,1,29.233,15.766Z" transform="translate(0 -0.563)" fill="url(#linear-gradient)"/>
+</svg>

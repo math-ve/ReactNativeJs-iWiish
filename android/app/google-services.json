@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "532835773031",
+    "firebase_url": "https://iwiish-ed11d-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "iwiish-ed11d",
+    "storage_bucket": "iwiish-ed11d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:532835773031:android:e05f8e927ca3a692f682c2",
+        "android_client_info": {
+          "package_name": "com.iwiish"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "532835773031-7al5lgua032ur6ebslitq8q1ppvn8s1i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iwiish",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "532835773031-itvna2f3ffno1ifp7ql7k7lktjfe23ue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRVKaIrAdxOm1mrL7RtymQFWXcmqhGeYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "532835773031-itvna2f3ffno1ifp7ql7k7lktjfe23ue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

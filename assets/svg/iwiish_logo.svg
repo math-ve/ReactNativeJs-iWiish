@@ -1,0 +1,18 @@
+<svg id="Groupe_3" data-name="Groupe 3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="54" height="53.262" viewBox="0 0 54 53.262">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.871" y1="0.08" x2="0.444" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ff5791"/>
+      <stop offset="1" stop-color="#fa7a47"/>
+    </linearGradient>
+  </defs>
+  <g id="bulle">
+    <g id="Groupe_2" data-name="Groupe 2">
+      <path id="Tracé_4" data-name="Tracé 4" d="M27.207,3.5A26.973,26.973,0,0,0,0,30.368V54.3a2.483,2.483,0,0,0,2.5,2.466H26.759c15.031,0,27.353-12.01,27.24-26.835A26.817,26.817,0,0,0,27.207,3.5Z" transform="translate(0 -3.5)" fill="rgba(255,255,255,0.85)"/>
+    </g>
+  </g>
+  <g id="Page-1" transform="translate(10.952 15.129)">
+    <g id="_003---Heart-Present" data-name="003---Heart-Present">
+      <path id="Shape" d="M22.3,0a10.017,10.017,0,0,0-7.07,2.994.508.508,0,0,1-.728,0A9.981,9.981,0,0,0,7.434,0C3.035,0,0,4.4,0,9.464,0,15.607,3.97,22.4,11.951,26.03a7.075,7.075,0,0,0,5.835,0c8.084-3.67,11.951-10.55,11.951-16.565C29.737,4.4,26.7,0,22.3,0Z" transform="translate(0)" fill="url(#linear-gradient)"/>
+    </g>
+  </g>
+</svg>
