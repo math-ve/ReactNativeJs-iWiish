@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         width: 170,
         marginRight: 10,
         marginTop: 10,
-        marginBottom: 10
+        marginBottom: 20,
     },
     shader: {
         justifyContent: 'flex-end',
@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontFamily: 'Montserrat-Regular',
         width: '70%',
-        //backgroundColor: 'grey',
         lineHeight: 20
     },
     shadow: {
@@ -107,9 +106,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.34,
         shadowRadius: 6.27,
-        
         elevation: 10,
-        //elevation: 1
     }
 })
 

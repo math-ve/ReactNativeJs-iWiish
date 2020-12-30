@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         fontSize: 15
     },
     lists_ctn: {
-        marginBottom: -12.5,
+        //marginBottom: -12.5,
     }
 })
 

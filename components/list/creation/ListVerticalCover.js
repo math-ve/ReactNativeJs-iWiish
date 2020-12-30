@@ -1,43 +1,19 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, ImageBackground } from 'react-native'
-import { useEffect, useState } from 'react/cjs/react.development'
+import { StyleSheet, Text, TouchableOpacity, ImageBackground } from 'react-native'
 // STYLE
 import { CameraSvg } from '../../../utils/svg/index_svg'
 // DEPENDENCIES
 import LinearGradient from 'react-native-linear-gradient'
-// FIREBASE
-import database from '@react-native-firebase/database'
 // REDUX
 import { useSelector } from 'react-redux'
 
 const ListVerticalCover = (props) => {
 
     // PROPS
-    const { handleClick, listId } = props
-
-    // LOCAL STATE
-    const [photoURL, setPhotoURL] = useState("")
+    const { handleClick, listId, photoURL } = props
 
     // REDUX
     const UserData = useSelector(state => state.UserData)
-
-    // SAVE ALL DATABASE CHANGES IN REDUX STATE
-    useEffect(() => {
-        const onValueChange = database()
-        .ref(`/users/${UserData.userID}/lists/${listId}/photoURL`)
-        .on('value', snapshot => {
-            setPhotoURL(snapshot.val())
-        })
-        return () => {
-        database()
-            .ref(`/users/${UserData.userID}/lists/${listId}/photoURL`)
-            .off('value', onValueChange)
-        }
-    }, [UserData])
-
-    useEffect(() => {
-        console.log(photoURL)
-    },[photoURL])
 
     if (photoURL === null)
         return (

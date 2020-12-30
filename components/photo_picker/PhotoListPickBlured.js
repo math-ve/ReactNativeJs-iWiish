@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { useEffect, useState } from 'react/cjs/react.development'
 // DEPENDENCIES
 import { BlurView } from '@react-native-community/blur'
 import ImagePicker from 'react-native-image-crop-picker'
@@ -10,14 +9,13 @@ import LinearGradient from 'react-native-linear-gradient'
 import { CameraSvg, GallerySvg, PresetImagesSvg, WhiteCrossSvg } from '../../utils/svg/index_svg'
 // FIREBASE
 import storage from '@react-native-firebase/storage'
-import database from '@react-native-firebase/database'
 // REDUX
 import { useSelector } from 'react-redux'
 
 const PhotoListPickBlured = (props) => {
 
     // PROPS
-    const { handleBack, handlePreset, listId } = props
+    const { handleBack, handlePreset, listId, setURL } = props
     
     // REDUX
     const UserData = useSelector(state => state.UserData);
@@ -30,15 +28,8 @@ const PhotoListPickBlured = (props) => {
                 const url = await storage()
                     .ref(`/${UserData.userID}/lists/${listId}/cover_picture.jpg`)
                     .getDownloadURL()
-                    .then((url) => saveUrlInDatabase(url))
+                    .then((url) => setURL(url))
             })
-    }
-
-    // SAVE URL IN DATABASE
-    const saveUrlInDatabase = (url) => {
-        database()
-            .ref(`users/${UserData.userID}/lists/${listId}/photoURL`)
-            .set(url)
     }
 
     // HANDLE CHOICE

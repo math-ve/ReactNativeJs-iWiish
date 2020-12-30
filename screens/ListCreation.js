@@ -6,7 +6,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
 // COMPS
 import TitleHeader from '../components/header/TitleHeader'
-import ListCover from '../components/list/creation/ListCover'
 import ListVerticalCover from '../components/list/creation/ListVerticalCover'
 import ListHorizontalCover from '../components/list/creation/ListHorizontalCover'
 import PresetPhotoPicking from '../components/list/creation/PresetPhotoPicking'
@@ -20,7 +19,7 @@ import Input from '../components/utils/Input'
 // UTILS
 import { create_list_id, delete_list_id} from '../utils/list_id/manage_list_id'
 import { delete_main_image_from_storage, delete_cover_image_from_storage } from '../utils/storage/manage_storage'
-import { save_new_list } from '../utils/database/manage_database'
+import { save_new_list, delete_list } from '../utils/database/manage_database'
 // DEPENDENCIES
 import { useNavigation } from '@react-navigation/native'
 
@@ -39,6 +38,8 @@ const ListCreation = () => {
     const [isPresetCoverPicking, setIsPresetCoverPicking] = useState(false)
     const [isPhotoPicking, setIsPhotoPicking] = useState(false)
     const [isPresetPhotoPicking, setIsPresetPhotoPicking] = useState(false)
+
+    //const [isListCreated, setIsListCreated] = useState(false)
 
     // REDUX
     const UserData = useSelector(state => state.UserData)
@@ -60,9 +61,14 @@ const ListCreation = () => {
     const handleSubmit = () => {
         if (title !== "") {
             if (!isPublic && password === "") {
-                Alert.alert("Oups", "Une liste privée a besoin dun mot de passe...")
+                Alert.alert("Oups", "Une liste privée a besoin d'un mot de passe...")
+            } else if (!photoURL) {
+                Alert.alert("Oups", "Une photo principale est requise. Vous pouvez choisir une image prédéfinie si vous n'en avez pas.")
+            } else if (!coverURL) {
+                Alert.alert("Oups", "Une photo de couverture est requise. Vous pouvez choisir une image prédéfinie si vous n'en avez pas.")
             } else {
-                save_new_list(UserData.userID, listId, title, isPublic, password)
+                //setIsListCreated(true)
+                save_new_list(UserData.userID, listId, title, isPublic, password, photoURL, coverURL)
                 navigation.goBack()
             }
         }
@@ -92,7 +98,7 @@ const ListCreation = () => {
 
     // HANDLE LEAVE WITHOUT SAVING (REMOVE LISTID IN DATABASE & REMOVE IMG FROM STORAGE)
     const handleLeave = () => {
-        delete_list_id(listId, UserData.userID)
+        delete_list(UserData.userID, listId)
         delete_main_image_from_storage(listId, UserData.userID)
         delete_cover_image_from_storage(listId, UserData.userID)
     }
@@ -113,8 +119,7 @@ const ListCreation = () => {
                     />
                 </View>
                 <View style={styles.list_cover_ctn}>
-                    {/* <ListCover type={0} title={title} handleClick={handleClickPhoto} listId={listId}/> */}
-                    <ListVerticalCover  handleClick={handleClickPhoto} listId={listId}/>
+                    <ListVerticalCover  handleClick={handleClickPhoto} listId={listId} photoURL={photoURL}/>
                 </View>
                 <VisibilityForm isPublic={isPublic} setIsPublic={setIsPublic} setPassword={setPassword}/>
                 <View style={{marginBottom:10}}>
@@ -124,19 +129,19 @@ const ListCreation = () => {
                 <GuideFooter />
             </ScrollView>
             {isCoverPicking ?
-                <PhotoListHorizontalPickBlured handleBack={handleClickCover} handlePreset={handleClickPresetCover} listId={listId}/> :
+                <PhotoListHorizontalPickBlured handleBack={handleClickCover} handlePreset={handleClickPresetCover} listId={listId} setURL={setCoverURL}/> :
                 <></>
             }
             {isPresetCoverPicking ?
-                <PresetCoverPicking handleBack={handleClickPresetCover} listId={listId}/> :
+                <PresetCoverPicking handleBack={handleClickPresetCover} listId={listId} setURL={setCoverURL}/> :
                 <></>
             }
             {isPhotoPicking ?
-                <PhotoListPickBlured handleBack={handleClickPhoto} handlePreset={handleClickPresetPhoto} listId={listId}/> :
+                <PhotoListPickBlured handleBack={handleClickPhoto} handlePreset={handleClickPresetPhoto} listId={listId} setURL={setPhotoURL}/> :
                 <></>
             }
             {isPresetPhotoPicking ?
-                <PresetPhotoPicking handleBack={handleClickPresetPhoto} title={title} listId={listId}/> :
+                <PresetPhotoPicking handleBack={handleClickPresetPhoto} title={title} listId={listId} setURL={setPhotoURL}/> :
                 <></>        
             }
         </SafeAreaView>

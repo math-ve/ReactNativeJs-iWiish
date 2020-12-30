@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 // DEPENDENCIES
 import { BlurView } from '@react-native-community/blur'
-import LinearGradient from 'react-native-linear-gradient'
 // STYLE
 import { WhiteCrossSvg } from '../../../utils/svg/index_svg'
 import { FlatList } from 'react-native-gesture-handler'
@@ -18,7 +17,7 @@ import { delete_main_image_from_storage } from '../../../utils/storage/manage_st
 const PresetPhotoPicking = (props) => {
 
     // PROPS
-    const { handleBack, title, listId } = props
+    const { handleBack, title, listId, setURL } = props
 
     // LOCAL STATE
     const [selectedPhoto, setSelectedPhoto] = useState("unset")
@@ -37,13 +36,9 @@ const PresetPhotoPicking = (props) => {
         if (selectedPhoto === "unset")
             Alert.alert("Oups", "Vous n'avez séléctionné aucune photo...")
         else {
-            database()
-                .ref(`users/${UserData.userID}/lists/${listId}/photoURL`)
-                .set(selectedPhoto)
-                .then(() => {
-                    handleBack(false)
-                    delete_main_image_from_storage(listId, UserData.userID)
-                })          
+            setURL(selectedPhoto)
+            handleBack(false)
+            delete_main_image_from_storage(UserData.userID, listId)
         }
 
     }
@@ -80,8 +75,6 @@ const PresetPhotoPicking = (props) => {
                 </View>                
                 <GradiantButton btnText="Enregistrer" handleClick={() => handleSubmit()}/>
             </View>
-
-
 
             <View style={{position:'absolute', top: 20, width: '90%', alignItems: 'flex-end'}}>
                 <TouchableOpacity onPress={() => handleBack(false)}>

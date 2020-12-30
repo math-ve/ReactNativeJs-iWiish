@@ -17,7 +17,7 @@ import { useSelector } from 'react-redux'
 const PhotoListHorizontalPickBlured = (props) => {
 
     // PROPS
-    const { handleBack, handlePreset, listId } = props
+    const { handleBack, handlePreset, listId, setURL } = props
     
     // REDUX
     const UserData = useSelector(state => state.UserData);
@@ -30,7 +30,7 @@ const PhotoListHorizontalPickBlured = (props) => {
                 const url = await storage()
                     .ref(`/${UserData.userID}/lists/${listId}/cover_horizontal_picture.jpg`)
                     .getDownloadURL()
-                    .then((url) => saveUrlInDatabase(url))
+                    .then((url) => setURL(url))
             })
     }
 

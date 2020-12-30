@@ -1,22 +1,11 @@
 // FIREBASE
 import database from '@react-native-firebase/database'
 
-// STORE LIST ID IN DATABASE (/lists) & (users/userID/lists)
-const store_new_list = (listId, userId) => {
+// RESERVE LISTID IN DATABASE (/lists/)
+const reserve_list_id = (listId, userId) => {
     database()
         .ref(`lists/${listId}`)
         .set(userId)    
-}
-
-// DELETE LIST IN DATABASE (/lists) & (users/userID/lists)
-const delete_list_id = (listId, userId) => {
-    database()
-        .ref(`lists/${listId}`)
-        .remove()
-    
-    database()
-        .ref(`users/${userId}/lists/${listId}`)
-        .remove()
 }
 
 const create_list_id = async (userID) => {
@@ -36,7 +25,7 @@ const create_list_id = async (userID) => {
             .once('value')
             .then((res) => {
                 if (res.val() === null) {   // if listID available
-                    store_new_list(new_list_id, userID)
+                    reserve_list_id(new_list_id, userID)
                     resolve(new_list_id)
                 } else if (res.val()) {     // if listID not available
                     console.log('list id taken')
@@ -50,5 +39,4 @@ const create_list_id = async (userID) => {
 
 export {
     create_list_id,
-    delete_list_id
 }

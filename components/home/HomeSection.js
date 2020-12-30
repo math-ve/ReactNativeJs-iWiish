@@ -10,7 +10,7 @@ const HomeSection = (props) => {
     const { title, svg, button} = props
 
     return (
-        <View style={[styles.section_ctn]}>
+        <View style={[styles.section_ctn, title !== "Mes listes" ? {marginTop: 15} : {}, title === "Mes listes" ? {marginBottom: -15} : {}]}>
             <View style={[styles.section_header, title === "Mes listes" ? {paddingHorizontal: 20} : {}]}>
                 <View style={[styles.section_title_ctn]}>
                     <Text style={[styles.section_title]}>{title}</Text>
@@ -31,14 +31,13 @@ const styles = StyleSheet.create({
     section_ctn: {
         width: '100%',
         marginTop: 20,
-        //paddingHorizontal: 20,
-
+        // borderWidth: 2,
+        // borderColor: 'black'
     },
     section_header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 0,
-        //paddingHorizontal: 20
     },
     section_title_ctn: {
         flexDirection: 'row',

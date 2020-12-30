@@ -56,8 +56,10 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     sections_ctn: {
-        //paddingHorizontal: 20,
         paddingBottom: 20
+    },
+    section_lists_ctn: {
+
     },
     section_res_ctn: {
         paddingHorizontal: 20,

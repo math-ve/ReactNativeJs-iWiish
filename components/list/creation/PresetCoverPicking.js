@@ -19,7 +19,7 @@ import { delete_cover_image_from_storage } from '../../../utils/storage/manage_s
 const PresetCoverPicking = (props) => {
 
     // PROPS
-    const { handleBack, title, listId } = props
+    const { handleBack, listId, setURL } = props
 
     // LOCAL STATE
     const [selectedPhoto, setSelectedPhoto] = useState("unset")
@@ -28,23 +28,14 @@ const PresetCoverPicking = (props) => {
     const UserData = useSelector(state => state.UserData)
     const presetImgUrls = useSelector(state => state.PresetCoverUrls)
 
-    // HANDLE CLICK
-    const handlePhotoClick = (url) => {
-        setSelectedPhoto(url)
-    }
-
     // HANDLE SUBMIT
     const handleSubmit = () => {
         if (selectedPhoto === "unset")
             Alert.alert("Oups", "Vous n'avez séléctionné aucune photo...")
         else {
-            database()
-                .ref(`users/${UserData.userID}/lists/${listId}/coverURL`)
-                .set(selectedPhoto)
-                .then(() => {
-                    handleBack(false)
-                    delete_cover_image_from_storage(listId, UserData.userID)
-                })          
+            setURL(selectedPhoto)
+            delete_cover_image_from_storage(listId, UserData.userID)
+            handleBack(false)
         }
     }
 
@@ -64,7 +55,6 @@ const PresetCoverPicking = (props) => {
                 <View style={styles.list_ctn}>
                     <FlatList 
                         data={presetImgUrls}
-                        //horizontal={true}
                         keyExtractor={item => item}
                         contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
                         renderItem={(item) => (

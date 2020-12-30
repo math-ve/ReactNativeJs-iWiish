@@ -1,17 +1,32 @@
 // FIREBASE
 import database from '@react-native-firebase/database'
 
-const save_new_list = (userId, listId, title, isPublic, password) => {
+// SAVE NEW LIST IN DATABASE
+const save_new_list = (userId, listId, title, isPublic, password, photoURL, coverURL) => {
     database()
         .ref(`/users/${userId}/lists/${listId}/`)
         .update({
             title: title,
             isPublic: isPublic,
             password: password,
-            listID: listId
+            listID: listId,
+            photoURL: photoURL,
+            coverURL: coverURL
         })
 }
 
+// DELETE LIST IN DATABASE (/lists) & (users/userID/lists)
+const delete_list = (userId, listId) => {
+    database()
+        .ref(`/users/${userId}/lists/${listId}`)
+        .remove()
+    
+    database()
+        .ref(`lists/${listId}`)
+        .remove()
+}
+
 export {
-    save_new_list
+    save_new_list,
+    delete_list,
 }
