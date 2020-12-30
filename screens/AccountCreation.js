@@ -13,7 +13,7 @@ import { setCurrentUserID, setLogStatus, setWelcomeScreen } from '../redux/actio
 // COMPS
 import ProfilePhotoEdit from '../components/auth/ProfilePhotoEdit'
 import AccountCreationForm from '../components/auth/AccountCreationForm'
-import PhotoPickBlured from '../components/photo_picker/PhotoPickBlured'
+import PhotoProfilePickBlured from '../components/photo_picker/PhotoProfilePickBlured'
 
 
 const AccountCreation = () => {
@@ -77,7 +77,7 @@ const AccountCreation = () => {
                 </View>
             </LinearGradient>
             {isPhotoPicking ? 
-                <PhotoPickBlured handleBack={handleClickPhoto}/> :
+                <PhotoProfilePickBlured handleBack={handleClickPhoto}/> :
                 <></>
             }
             

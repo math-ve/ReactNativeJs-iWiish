@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17.033" height="19.467" viewBox="0 0 17.033 19.467">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.915" y1="0.074" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#189a01"/>
+      <stop offset="1" stop-color="#1dff00"/>
+    </linearGradient>
+  </defs>
+  <path id="Icon_awesome-unlock" data-name="Icon awesome-unlock" d="M15.208,9.733H5.779V5.813a2.738,2.738,0,1,1,5.475-.034v.608a.91.91,0,0,0,.912.912h1.217a.91.91,0,0,0,.912-.912V5.779a5.779,5.779,0,1,0-11.558.057v3.9H1.825A1.825,1.825,0,0,0,0,11.558v6.083a1.825,1.825,0,0,0,1.825,1.825H15.208a1.825,1.825,0,0,0,1.825-1.825V11.558A1.825,1.825,0,0,0,15.208,9.733Z" transform="translate(0 0)" fill="url(#linear-gradient)"/>
+</svg>

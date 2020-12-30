@@ -25,3 +25,17 @@ export const setWelcomeScreen = (data) => {
         payload: data
     }
 }
+
+export const savePresetImgUrls = (data) => {
+    return {
+        type: "SAVE_IMG_URLS",
+        payload: data
+    }
+}
+
+export const savePresetCoverUrls = (data) => {
+    return {
+        type: "SAVE_COVER_URLS",
+        payload: data
+    }
+}

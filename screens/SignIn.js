@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 // STYLE
@@ -9,17 +9,12 @@ import AuthHero from '../components/auth/AuthHero'
 import AuthNav from '../components/auth/AuthNav'
 import AuthSocials from '../components/auth/AuthSocials'
 // FIREBASE
-import database from '@react-native-firebase/database'
 import auth from '@react-native-firebase/auth'
-import { GoogleSignin } from '@react-native-community/google-signin'
 // TOOLS
 import is_email_valid from '../utils/signup_validations/email_validation'
-import { newUserDataWithGoogle, newUserDataWithFacebook } from '../utils/user_creation/new_user_data'
 // REDUX
 import { useDispatch } from 'react-redux'
 import { setLogStatus } from '../redux/actions/index_actions'
-// DEPENDENCIES
-import { LoginManager, AccessToken } from 'react-native-fbsdk'
 
 const SignIn = (props) => {
 
@@ -51,27 +46,6 @@ const SignIn = (props) => {
                     else if (err.code === 'auth/wrong-password')
                         setIsWrongPassword(true)
                 })
-    }
-
-    // SIGN IN WITH GOOGLE
-    const signInWithGoogle = async () => {
-        const { idToken } = await GoogleSignin.signIn()
-        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-        auth().signInWithCredential(googleCredential)
-            .then((res) => newUserDataWithGoogle(res))
-    }
-
-    // SIGN IN WITH FACEBOOK
-    const createNewUserWithFacebook = async () => {
-        const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-        if (result.isCancelled)
-            throw 'User cancelled the login process';
-        const data = await AccessToken.getCurrentAccessToken();
-        if (!data)
-            throw 'Something went wrong obtaining access token';
-        const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
-        auth().signInWithCredential(facebookCredential)
-            .then((res) => newUserDataWithFacebook(res))
     }
 
     return (
@@ -142,9 +116,7 @@ const SignIn = (props) => {
                 <View style={styles.ou_container}>
                     <Text style={styles.ou}>Ou</Text>
                 </View>
-                <AuthSocials
-                    createNewUserWithGoogle={signInWithGoogle}
-                    createNewUserWithFacebook={createNewUserWithFacebook}/>
+                <AuthSocials />
                 <AuthNav 
                     to="SignUp"
                     text="Nouveau ici ?"

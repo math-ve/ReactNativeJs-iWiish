@@ -3,11 +3,36 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native'
 // STYLE
 import GoogleSvg from '../../assets/svg/google.svg'
 import FacebookSvg from '../../assets/svg/facebook.svg'
+// FIREBASE
+import auth from '@react-native-firebase/auth'
+import { GoogleSignin } from '@react-native-community/google-signin'
+// DEPENDENCIES
+import { LoginManager, AccessToken } from 'react-native-fbsdk'
+// TOOLS
+import { newUserDataWithGoogle, newUserDataWithFacebook } from '../../utils/user_creation/new_user_data'
 
 const AuthSocials = (props) => {
 
-    // PROPS
-    const { createNewUserWithGoogle, createNewUserWithFacebook } = props
+    // CREATE USER WITH GOOGLE
+    const createNewUserWithGoogle = async () => {
+        const { idToken } = await GoogleSignin.signIn()
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+        auth().signInWithCredential(googleCredential)
+            .then((res) => newUserDataWithGoogle(res))
+    }
+    
+    // CREATE USER WITH FACEBOOK
+    const createNewUserWithFacebook = async () => {
+        const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+        if (result.isCancelled)
+            throw 'User cancelled the login process';
+        const data = await AccessToken.getCurrentAccessToken();
+        if (!data)
+            throw 'Something went wrong obtaining access token';
+        const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+        auth().signInWithCredential(facebookCredential)
+            .then((res) => newUserDataWithFacebook(res))
+    }
 
     return (
         <View style={styles.social_auth_container}>

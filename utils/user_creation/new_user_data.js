@@ -18,7 +18,7 @@ const newUserDataWithMailDB = (data) => {
             ShowWelcomeBanner : true
         },
         settings : {
-            language : "FR"
+            language : "Français"
         }
     })
 
@@ -42,7 +42,7 @@ const newUserDataWithGoogle = (data) => {
                 ShowWelcomeBanner : true
             },
             settings : {
-                language : "FR"
+                language : "Français"
             }
         }).then(() => {
             database()
@@ -70,7 +70,7 @@ const newUserDataWithFacebook = (data) => {
                 ShowWelcomeBanner : true
             },
             settings : {
-                language : "FR"
+                language : "Français"
             }
         }).then(() => {
             database()

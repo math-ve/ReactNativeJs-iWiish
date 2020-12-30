@@ -13,9 +13,7 @@ import { GoogleSignin } from '@react-native-community/google-signin'
 // TOOLS
 import email_validation from '../utils/signup_validations/email_validation'
 import {is_pass_valid, does_they_match} from '../utils/signup_validations/password_validation'
-import { newUserDataWithMailDB, newUserDataWithGoogle, newUserDataWithFacebook } from '../utils/user_creation/new_user_data'
-// DEPENDENCIES
-import { LoginManager, AccessToken } from 'react-native-fbsdk'
+import { newUserDataWithMailDB } from '../utils/user_creation/new_user_data'
 
 GoogleSignin.configure({
     webClientId: '532835773031-itvna2f3ffno1ifp7ql7k7lktjfe23ue.apps.googleusercontent.com',
@@ -54,27 +52,6 @@ const SignUp = (props) => {
         }
         else
             Alert.alert("Oups..", "Champ(s) invalide(s)")
-    }
-
-    // CREATE USER WITH GOOGLE
-    const createNewUserWithGoogle = async () => {
-        const { idToken } = await GoogleSignin.signIn()
-        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-        auth().signInWithCredential(googleCredential)
-            .then((res) => newUserDataWithGoogle(res))
-    }
-
-    // CREATE USER WITH FACEBOOK
-    const createNewUserWithFacebook = async () => {
-        const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-        if (result.isCancelled)
-            throw 'User cancelled the login process';
-        const data = await AccessToken.getCurrentAccessToken();
-        if (!data)
-            throw 'Something went wrong obtaining access token';
-        const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
-        auth().signInWithCredential(facebookCredential)
-            .then((res) => newUserDataWithFacebook(res))
     }
 
     return (
@@ -183,10 +160,7 @@ const SignUp = (props) => {
                 <View style={styles.ou_container}>
                     <Text style={styles.ou}>Ou</Text>
                 </View>
-                <AuthSocials
-                    createNewUserWithGoogle={createNewUserWithGoogle}
-                    createNewUserWithFacebook={createNewUserWithFacebook}
-                />
+                <AuthSocials />
                 <AuthNav 
                     to="SignIn"
                     text="Déjà inscrit ?"

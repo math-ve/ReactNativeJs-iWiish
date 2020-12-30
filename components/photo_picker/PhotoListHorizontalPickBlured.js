@@ -1,33 +1,34 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useEffect, useState } from 'react/cjs/react.development'
 // DEPENDENCIES
 import { BlurView } from '@react-native-community/blur'
 import ImagePicker from 'react-native-image-crop-picker'
 import LinearGradient from 'react-native-linear-gradient'
 // STYLE
-import { CameraSvg, GallerySvg, WhiteCrossSvg } from '../../utils/svg/index_svg'
+import { CameraSvg, GallerySvg, PresetImagesSvg, WhiteCrossSvg } from '../../utils/svg/index_svg'
 // FIREBASE
 import storage from '@react-native-firebase/storage'
 import database from '@react-native-firebase/database'
 // REDUX
 import { useSelector } from 'react-redux'
 
-const PhotoPickBlured = (props) => {
+const PhotoListHorizontalPickBlured = (props) => {
 
     // PROPS
-    const { handleBack } = props
-
+    const { handleBack, handlePreset, listId } = props
+    
     // REDUX
     const UserData = useSelector(state => state.UserData);
 
-    // SEND IMG TO FIREBASE & GET URL
+    // SEND IMG TO FIREBASE STORAGE & GET URL
     const saveImageFirebase = async (path) => {
-        const reference = storage().ref(`/${UserData.userID}/profile_picture.jpg`)
+        const reference = storage().ref(`/${UserData.userID}/lists/${listId}/cover_horizontal_picture.jpg`)
         await reference.putFile(path)
             .then(async () => {
                 const url = await storage()
-                    .ref(`/${UserData.userID}/profile_picture.jpg`)
+                    .ref(`/${UserData.userID}/lists/${listId}/cover_horizontal_picture.jpg`)
                     .getDownloadURL()
                     .then((url) => saveUrlInDatabase(url))
             })
@@ -36,19 +37,17 @@ const PhotoPickBlured = (props) => {
     // SAVE URL IN DATABASE
     const saveUrlInDatabase = (url) => {
         database()
-            .ref(`users/${UserData.userID}/infos/photoURL`)
-            .set(url)
-        database()
-            .ref(`profile_pictures/${UserData.userID}`)
+            .ref(`users/${UserData.userID}/lists/${listId}/coverURL`)
             .set(url)
     }
 
-    const handleChoice = (source) => {
+    // HANDLE CHOICE
+    const handleChoice = async (source) => {
         handleBack(false)
         if (source === "camera") {
             ImagePicker.openCamera({
-                width:300,
-                height:300,
+                width:580,
+                height:200,
                 cropping: true,
             }).then(image => {
                 saveImageFirebase(image.path)
@@ -56,17 +55,21 @@ const PhotoPickBlured = (props) => {
         }
         else if (source === "gallery") {
             ImagePicker.openPicker({
-                width:300,
-                height:300,
+                width:580,
+                height:200,
                 cropping: true,
             }).then(image => {
                 saveImageFirebase(image.path)
             })
         }
+        else if (source === "preset") {
+            handleBack(false)
+            handlePreset(true)
+        }
     }
 
     return (
-        <View style={[styles.photo_picker_ctn/*, isPhotoPicking ? ,{display : 'flex', position: 'absolute'} : {display : 'none', position: 'relative'}*/]}>
+        <View style={[styles.photo_picker_ctn]}>
             <BlurView
                 style={[styles.photo_picker_ctn]}
                 blurType="dark"
@@ -89,6 +92,11 @@ const PhotoPickBlured = (props) => {
                     <GallerySvg />
                     <Text style={styles.choice_text}>Galerie</Text>
                 </TouchableOpacity>
+                <View style={styles.separator}></View>
+                <TouchableOpacity style={styles.choice_item} onPress={() => handleChoice('preset')}>
+                    <PresetImagesSvg />
+                    <Text style={styles.choice_text}>Images prédéfinies</Text>
+                </TouchableOpacity>
             </LinearGradient>
             <View style={{position:'absolute', top: 20, width: '90%', alignItems: 'flex-end'}}>
                 <TouchableOpacity onPress={() => handleBack(false)}>
@@ -96,7 +104,6 @@ const PhotoPickBlured = (props) => {
                 </TouchableOpacity>
             </View>
         </View>
-
     )
 }
 
@@ -110,25 +117,25 @@ const styles = StyleSheet.create({
     },
     choice_ctn: {
         width: '90%',
-        height: '30%',
+        height: '50%',
         position: 'absolute',
         borderWidth: 2,
         borderColor: 'white',
         borderRadius: 10,
-        flexDirection: 'row',
         justifyContent:'space-evenly',
         alignItems: 'center'
     },
     separator: {
-        width: 2,
-        height: '90%',
+        width: '90%',
+        height: 1,
         backgroundColor: 'white',
         borderRadius: 50
     },
     choice_item: {
         alignItems: 'center',
         justifyContent:'center',
-        padding: 30
+        padding: 15,
+        paddingHorizontal: 50
     },
     choice_text: {
         fontFamily: 'Montserrat-SemiBold',
@@ -143,4 +150,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default PhotoPickBlured
+export default PhotoListHorizontalPickBlured

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17.036" height="19.47" viewBox="0 0 17.036 19.47">
+  <defs>
+    <linearGradient id="linear-gradient" x1="1" y1="0.074" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#8d0202"/>
+      <stop offset="1" stop-color="red"/>
+    </linearGradient>
+  </defs>
+  <path id="Icon_awesome-lock" data-name="Icon awesome-lock" d="M15.211,8.518H14.3V5.78a5.78,5.78,0,1,0-11.56,0V8.518H1.825A1.826,1.826,0,0,0,0,10.343v7.3A1.826,1.826,0,0,0,1.825,19.47H15.211a1.826,1.826,0,0,0,1.825-1.825v-7.3A1.826,1.826,0,0,0,15.211,8.518Zm-3.955,0H5.78V5.78a2.738,2.738,0,1,1,5.476,0Z" fill="url(#linear-gradient)"/>
+</svg>

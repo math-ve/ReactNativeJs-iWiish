@@ -7,17 +7,22 @@ import SignUp from './screens/SignUp'
 import AccountCreation from './screens/AccountCreation'
 import HomeScreen from './screens/Home'
 import Loader from './screens/Loader'
+import Settings from './screens/Settings'
+import ListCreation from './screens/ListCreation'
 // REDUX
 import { useDispatch, useSelector } from 'react-redux'
-import { setLogStatus } from './redux/actions/index_actions'
+import { setLogStatus, savePresetImgUrls, savePresetCoverUrls } from './redux/actions/index_actions'
 // FIREBASE
 import database from '@react-native-firebase/database'
+import storage from '@react-native-firebase/storage'
 import auth from '@react-native-firebase/auth'
 import { setCurrentUserID, setCurrentUserData, setWelcomeScreen } from './redux/actions/index_actions'
 import Welcome from './screens/Welcome';
 // DEPENDENCIES
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+// UTILS
+import { get_pictures_urls, get_covers_urls} from './utils/preset_images/get_preset_img_url'
 
 const Stack = createStackNavigator();
 
@@ -69,6 +74,20 @@ const App = () => {
     }
   }, [UserID])
 
+  // SAVE PRESET IMAGES URL IN REDUX STATE
+  useEffect(() => {
+    if (UserData) {
+      const ref = storage().ref("preset_images/")
+      get_pictures_urls(ref, undefined).then((res) => {
+        dispatch(savePresetImgUrls(res))
+      })
+      const ref2 = storage().ref("preset_cover/")
+      get_covers_urls(ref2, undefined).then((res) => {
+        dispatch(savePresetCoverUrls(res))
+      })      
+    }
+  }, [UserData])
+
   if (!isLogged)
     return (
       <NavigationContainer headerMode="none">
@@ -106,6 +125,8 @@ const App = () => {
             }}
           >
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen name="ListCreation" component={ListCreation} />
           </Stack.Navigator>
         </NavigationContainer>
     )    
