@@ -6,7 +6,7 @@ import Svg from '../utils/Svg'
 const Input = (props) => {
 
     // PROPS
-    const { placeholder, svg, width, onChangeText } = props
+    const { placeholder, svg, width, onChangeText, defaultValue } = props
 
     return (
         <View style={[styles.ctn, {width: width}]}>
@@ -16,12 +16,17 @@ const Input = (props) => {
                 maxLength={30}
                 placeholderTextColor='#989898'
                 onChangeText={(text) => onChangeText(text)}
+                defaultValue={defaultValue}
             />
             <View style={styles.svg_ctn}>
                 <Svg svg={svg} />
             </View>
         </View>
     )
+}
+
+Input.defaultProps = {
+    defaultValue: ""
 }
 
 const styles = StyleSheet.create({

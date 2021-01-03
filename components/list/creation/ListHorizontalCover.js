@@ -10,12 +10,12 @@ import LinearGradient from 'react-native-linear-gradient'
 const ListHorizontalCover = (props) => {
 
     // PROPS
-    const { handleClick, listId, coverURL } = props
+    const { handleClick, coverPATH } = props
 
     // REDUX
     const UserData = useSelector(state => state.UserData)
 
-    if (coverURL === null)
+    if (coverPATH === null)
         return (
             <TouchableOpacity style={styles.ctn} onPress={() => handleClick(true)}>
                 <CameraSvg />
@@ -25,7 +25,7 @@ const ListHorizontalCover = (props) => {
     else
         return (
             <TouchableOpacity style={styles.ctn} onPress={() => handleClick(true)}>
-                <ImageBackground source={{uri: coverURL ? coverURL : null}} style={styles.bg_img} imageStyle={{borderRadius: 5}}>
+                <ImageBackground source={{uri : coverPATH}} style={styles.bg_img} imageStyle={{borderRadius: 5}}>
                     <LinearGradient
                     colors={['#FFFFFF00', '#00000099']}
                     style={styles.shader}

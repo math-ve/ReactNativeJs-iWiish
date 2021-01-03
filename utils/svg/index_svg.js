@@ -22,6 +22,10 @@ import StarSvg from '../../assets/svg/star.svg'
 import TitleSvg from '../../assets/svg/title.svg'
 import PresetImagesSvg from '../../assets/svg/preset_images.svg'
 import OpenLockSvg from '../../assets/svg/open_lock.svg'
+import EditSquareSvg from '../../assets/svg/edit_square.svg'
+import AddCrossSvg from '../../assets/svg/add_cross.svg'
+import RedTrashSvg from '../../assets/svg/red_trash.svg'
+import EmptyBoxSvg from '../../assets/svg/empty_box.svg'
 
 export {
     MailSvg,
@@ -47,5 +51,9 @@ export {
     StarSvg,
     TitleSvg,
     PresetImagesSvg,
-    OpenLockSvg
+    OpenLockSvg,
+    EditSquareSvg,
+    AddCrossSvg,
+    RedTrashSvg,
+    EmptyBoxSvg
 }

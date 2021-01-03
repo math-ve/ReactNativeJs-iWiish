@@ -9,6 +9,8 @@ import HomeScreen from './screens/Home'
 import Loader from './screens/Loader'
 import Settings from './screens/Settings'
 import ListCreation from './screens/ListCreation'
+import Mylist from './screens/Mylist'
+import MylistEdit from './screens/MyListEdit'
 // REDUX
 import { useDispatch, useSelector } from 'react-redux'
 import { setLogStatus, savePresetImgUrls, savePresetCoverUrls } from './redux/actions/index_actions'
@@ -127,6 +129,8 @@ const App = () => {
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="Settings" component={Settings} />
             <Stack.Screen name="ListCreation" component={ListCreation} />
+            <Stack.Screen name="MyList" component={Mylist} />
+            <Stack.Screen name="MyListEdit" component={MylistEdit} />
           </Stack.Navigator>
         </NavigationContainer>
     )    

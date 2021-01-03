@@ -1,11 +1,9 @@
 import React from 'react'
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 // DEPENDENCIES
 import LinearGradient from 'react-native-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
-// REDUX
-import { useSelector } from 'react-redux'
 // STYLE
 import { SearchSvg, SettingsSvg } from '../../utils/svg/index_svg'
 import ProfilePicture from './ProfilePicture'
@@ -14,9 +12,6 @@ const MainHeader = (props) => {
 
     // NAVIGATION
     const navigation = useNavigation()
-
-    // REDUX
-    const UserData = useSelector(state => state.UserData)
 
     // GO TO SETTINGS SCREEN
     const goToSettingsScreen = () => {

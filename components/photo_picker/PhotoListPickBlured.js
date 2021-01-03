@@ -7,31 +7,12 @@ import ImagePicker from 'react-native-image-crop-picker'
 import LinearGradient from 'react-native-linear-gradient'
 // STYLE
 import { CameraSvg, GallerySvg, PresetImagesSvg, WhiteCrossSvg } from '../../utils/svg/index_svg'
-// FIREBASE
-import storage from '@react-native-firebase/storage'
-// REDUX
-import { useSelector } from 'react-redux'
 
 const PhotoListPickBlured = (props) => {
 
     // PROPS
-    const { handleBack, handlePreset, listId, setURL } = props
+    const { handleBack, handlePreset, setPATH } = props
     
-    // REDUX
-    const UserData = useSelector(state => state.UserData);
-
-    // SEND IMG TO FIREBASE & GET URL
-    const saveImageFirebase = async (path) => {
-        const reference = storage().ref(`/${UserData.userID}/lists/${listId}/cover_picture.jpg`)
-        await reference.putFile(path)
-            .then(async () => {
-                const url = await storage()
-                    .ref(`/${UserData.userID}/lists/${listId}/cover_picture.jpg`)
-                    .getDownloadURL()
-                    .then((url) => setURL(url))
-            })
-    }
-
     // HANDLE CHOICE
     const handleChoice = async (source) => {
         handleBack(false)
@@ -41,7 +22,7 @@ const PhotoListPickBlured = (props) => {
                 height:525,
                 cropping: true,
             }).then(image => {
-                saveImageFirebase(image.path)
+                setPATH(image.path)
             })
         }
         else if (source === "gallery") {
@@ -50,7 +31,7 @@ const PhotoListPickBlured = (props) => {
                 height:525,
                 cropping: true,
             }).then(image => {
-                saveImageFirebase(image.path)
+                setPATH(image.path)
             })
         }
         else if (source === "preset") {

@@ -8,58 +8,31 @@ import ImagePicker from 'react-native-image-crop-picker'
 import LinearGradient from 'react-native-linear-gradient'
 // STYLE
 import { CameraSvg, GallerySvg, PresetImagesSvg, WhiteCrossSvg } from '../../utils/svg/index_svg'
-// FIREBASE
-import storage from '@react-native-firebase/storage'
-import database from '@react-native-firebase/database'
-// REDUX
-import { useSelector } from 'react-redux'
 
 const PhotoListHorizontalPickBlured = (props) => {
 
     // PROPS
-    const { handleBack, handlePreset, listId, setURL } = props
+    const { handleBack, handlePreset, setPATH } = props
     
-    // REDUX
-    const UserData = useSelector(state => state.UserData);
-
-    // SEND IMG TO FIREBASE STORAGE & GET URL
-    const saveImageFirebase = async (path) => {
-        const reference = storage().ref(`/${UserData.userID}/lists/${listId}/cover_horizontal_picture.jpg`)
-        await reference.putFile(path)
-            .then(async () => {
-                const url = await storage()
-                    .ref(`/${UserData.userID}/lists/${listId}/cover_horizontal_picture.jpg`)
-                    .getDownloadURL()
-                    .then((url) => setURL(url))
-            })
-    }
-
-    // SAVE URL IN DATABASE
-    const saveUrlInDatabase = (url) => {
-        database()
-            .ref(`users/${UserData.userID}/lists/${listId}/coverURL`)
-            .set(url)
-    }
-
     // HANDLE CHOICE
     const handleChoice = async (source) => {
         handleBack(false)
         if (source === "camera") {
             ImagePicker.openCamera({
-                width:580,
-                height:200,
+                width:870,
+                height:300,
                 cropping: true,
             }).then(image => {
-                saveImageFirebase(image.path)
+                setPATH(image.path)
             })
         }
         else if (source === "gallery") {
             ImagePicker.openPicker({
-                width:580,
-                height:200,
+                width:870,
+                height:300,
                 cropping: true,
             }).then(image => {
-                saveImageFirebase(image.path)
+                setPATH(image.path)
             })
         }
         else if (source === "preset") {

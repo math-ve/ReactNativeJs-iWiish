@@ -1,8 +1,9 @@
 import React from 'react'
-import { ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback, TouchableHighlight } from 'react-native'
 import { useEffect, useState } from 'react/cjs/react.development'
 // DEPENDENCIES
 import LinearGradient from 'react-native-linear-gradient'
+import { useNavigation } from '@react-navigation/native'
 // FIREBASE
 import database from '@react-native-firebase/database'
 // REDUX
@@ -18,6 +19,9 @@ const HomeListCover = (props) => {
     // LOCAL STATE
     const [listData, setListData] = useState({})
     const [nbrItems, setNbrItems] = useState(0)
+
+    // NAVIGATION
+    const navigation = useNavigation()
 
     // REDUX
     const UserData = useSelector(state => state.UserData)
@@ -39,8 +43,13 @@ const HomeListCover = (props) => {
         }
     }, [listData])
 
+    // NAVIGATE TO MYLIST
+    const handleNavigate = () => {
+        navigation.navigate("MyList", {listId: listId})
+    }
+
     return (
-        <View style={[styles.ctn, styles.shadow, index === 0 ? {marginLeft: 20} : {}, index === nbrLists - 1 ? {marginRight: 20} : {}]}>
+        <TouchableHighlight style={[styles.ctn, styles.shadow, index === 0 ? {marginLeft: 20} : {}, index === nbrLists - 1 ? {marginRight: 20} : {}]} onPress={() => handleNavigate()}>
             <ImageBackground
                 source={{uri: listData ? listData.photoURL : null}}
                 style={[{width: '100%', height: '100%'}]}
@@ -62,7 +71,7 @@ const HomeListCover = (props) => {
                     </View>
                 </LinearGradient>
             </ImageBackground>
-        </View>
+        </TouchableHighlight>
     )
 }
 
@@ -73,6 +82,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginTop: 10,
         marginBottom: 20,
+        borderRadius: 5
     },
     shader: {
         justifyContent: 'flex-end',

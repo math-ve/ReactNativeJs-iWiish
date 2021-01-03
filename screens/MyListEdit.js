@@ -1,34 +1,41 @@
-import React, { useEffect, useState } from 'react'
-import { Alert, StyleSheet, View } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
-import { SafeAreaView } from 'react-native-safe-area-context'
-// REDUX
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { SafeAreaView, ScrollView, StyleSheet, Alert, View } from 'react-native'
+import { useEffect } from 'react/cjs/react.development'
 // COMPS
 import TitleHeader from '../components/header/TitleHeader'
 import ListVerticalCover from '../components/list/creation/ListVerticalCover'
 import ListHorizontalCover from '../components/list/creation/ListHorizontalCover'
+import GuideFooter from '../components/utilisation_guide/GuideFooter'
+import GradiantButton from '../components/utils/GradiantButton'
+import Input from '../components/utils/Input'
 import PresetPhotoPicking from '../components/list/creation/PresetPhotoPicking'
 import PresetCoverPicking from '../components/list/creation/PresetCoverPicking'
 import VisibilityForm from '../components/list/creation/VisibilityForm'
 import PhotoListPickBlured from '../components/photo_picker/PhotoListPickBlured'
 import PhotoListHorizontalPickBlured from '../components/photo_picker/PhotoListHorizontalPickBlured'
-import GuideFooter from '../components/utilisation_guide/GuideFooter'
-import GradiantButton from '../components/utils/GradiantButton'
-import Input from '../components/utils/Input'
 import LoadingBlured from '../components/utils/LoadingBlured'
 // UTILS
-import { create_list_id } from '../utils/list_id/manage_list_id'
 import { delete_main_image_from_storage, delete_cover_image_from_storage } from '../utils/storage/manage_storage'
-import { save_new_list, delete_list } from '../utils/database/manage_database'
+import { save_list_after_edit, delete_list } from '../utils/database/manage_database'
+// REDUX
+import { useSelector } from 'react-redux'
 // DEPENDENCIES
 import { useNavigation } from '@react-navigation/native'
+import TrashButton from '../components/utils/TrashButton'
 
-const ListCreation = () => {
+
+const MyListEdit = (props) => {
+
+    // PROPS
+    const { route } = props
 
     // LOCAL STATE
-    const [listId, setListId] = useState("")
+    const [listData, setListData] = useState(null)
 
+    // NAVIGATION
+    const navigation = useNavigation()
+
+    const [listId, setListId] = useState("")
     const [title, setTitle] = useState("")
     const [isPublic, setIsPublic] = useState(true)
     const [password, setPassword] = useState("")
@@ -44,40 +51,24 @@ const ListCreation = () => {
 
     // REDUX
     const UserData = useSelector(state => state.UserData)
+    const PresetImgUrls = useSelector(state => state.PresetImgUrls)
+    const PresetCoverUrls = useSelector(state => state.PresetCoverUrls)
 
-    // NAVIGATION
-    const navigation = useNavigation()
-
-    // CREATE LIST ID AND STORE IN DATABASE
+    // GET LIST DATA FROM ROUTE
     useEffect(() => {
-        const getListId = async (UserID) => {
-            const newListId = await create_list_id(UserID)
-            return newListId
-        }
-        if (listId === "")
-            getListId(UserData.userID).then((res) => setListId(res))
-    }, [])
+        setListData(route.params.listData)
+    }, [route])
 
-    // HANDLE SUBMIT
-    const handleSubmit = () => {
-        if (title !== "") {
-            if (!isPublic && password === "") {
-                Alert.alert("Oups", "Une liste privée a besoin d'un mot de passe...")
-            } else if (!photoPATH) {
-                Alert.alert("Oups", "Une photo principale est requise. Vous pouvez choisir une image prédéfinie si vous n'en avez pas.")
-            } else if (!coverPATH) {
-                Alert.alert("Oups", "Une photo de couverture est requise. Vous pouvez choisir une image prédéfinie si vous n'en avez pas.")
-            } else {
-                setIsLoading(true)
-                save_new_list(UserData.userID, listId, title, isPublic, password, photoPATH, coverPATH).then(() => {
-                    setIsLoading(false)
-                    navigation.goBack()
-                })
-            }
+    useEffect(() => {
+        if (listData) {
+            setListId(listData.listID)
+            setTitle(listData.title)
+            setIsPublic(listData.isPublic)
+            setPassword(listData.password)
+            setPhotoPATH(listData.photoURL)
+            setCoverPATH(listData.coverURL)
         }
-        else
-            Alert.alert("Oups", "Votre liste a besoin d'un titre")
-    }
+    }, [listData])
 
     // HANDLE COVER PICKING BOOL
     const handleClickCover = (bool) => {
@@ -99,16 +90,52 @@ const ListCreation = () => {
         setIsPresetPhotoPicking(bool)
     }
 
-    // HANDLE LEAVE WITHOUT SAVING (REMOVE LISTID IN DATABASE & REMOVE IMG FROM STORAGE)
-    const handleLeave = () => {
-        delete_list(UserData.userID, listId)
-        delete_main_image_from_storage(listId, UserData.userID)
-        delete_cover_image_from_storage(listId, UserData.userID)
+    // HANDLE SUBMIT
+    const handleSubmit = () => {
+        if (title !== "") {
+            if (!isPublic && password === "") {
+                Alert.alert("Oups", "Une liste privée a besoin d'un mot de passe...")
+            } else if (!photoPATH) {
+                Alert.alert("Oups", "Une photo principale est requise. Vous pouvez choisir une image prédéfinie si vous n'en avez pas.")
+            } else if (!coverPATH) {
+                Alert.alert("Oups", "Une photo de couverture est requise. Vous pouvez choisir une image prédéfinie si vous n'en avez pas.")
+            } else {
+                setIsLoading(true)
+                save_list_after_edit(UserData.userID, listId, title, isPublic, password, photoPATH, coverPATH, PresetImgUrls, PresetCoverUrls).then(() => {
+                    setIsLoading(false)
+                    navigation.goBack()
+                })
+            }
+        }
+        else
+            Alert.alert("Oups", "Votre liste a besoin d'un titre")
+    }
+
+    // DELETE LIST
+    const handleDelete = () => {
+        Alert.alert(
+            "Attention",
+            "Êtes-vous certain de vouloir supprimer cette liste ? Vous ne pourrez pas récupérer son contenu une fois celle-ci supprimée.",
+            [
+                {
+                    text: "Annuler",
+                    style: "cancel"
+                },
+                {
+                    text: "oui",
+                    onPress: () => {
+                        delete_list(UserData.userID, listId)
+                        delete_main_image_from_storage(listId, UserData.userID)
+                        delete_cover_image_from_storage(listId, UserData.userID)
+                        navigation.navigate("HomeScreen")                    
+                    }
+                }
+            ])
     }
 
     return (
-        <SafeAreaView style={{flex: 1}}>
-            <TitleHeader title="Nouvelle liste" handleLeave={handleLeave}/>
+        <SafeAreaView style={{flex:1}}>
+            <TitleHeader title="Paramètres"/>
             <ScrollView style={styles.scroll_ctn} contentContainerStyle={styles.scroll_ctn_content}>
                 <View style={styles.horizontal_cover_ctn}>
                     <ListHorizontalCover handleClick={handleClickCover} coverPATH={coverPATH}/>
@@ -119,14 +146,16 @@ const ListCreation = () => {
                         svg="TitleSvg"
                         width="100%"
                         onChangeText={setTitle}
+                        defaultValue={title}
                     />
                 </View>
                 <View style={styles.list_cover_ctn}>
                     <ListVerticalCover  handleClick={handleClickPhoto} photoPATH={photoPATH}/>
                 </View>
-                <VisibilityForm isPublic={isPublic} setIsPublic={setIsPublic} setPassword={setPassword}/>
-                <View style={{marginBottom:10}}>
-                    <GradiantButton handleClick={handleSubmit} btnText="Créer la liste" />
+                <VisibilityForm isPublic={isPublic} setIsPublic={setIsPublic} setPassword={setPassword} defaultValue={password}/>
+                <View style={{marginBottom:10, flexDirection: 'row', justifyContent: 'space-around'}}>
+                    <TrashButton handleClick={handleDelete}/>
+                    <GradiantButton handleClick={handleSubmit} btnText="Enregistrer" />
                 </View>
                 
                 <GuideFooter />
@@ -148,7 +177,7 @@ const ListCreation = () => {
                 <></>        
             }
             {isLoading ?
-                <LoadingBlured text="Création de la liste..."/> :
+                <LoadingBlured text="Enregistrement des modifications..."/> :
                 <></>
             }
         </SafeAreaView>
@@ -183,4 +212,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ListCreation
+export default MyListEdit

@@ -53,7 +53,7 @@ const HomeSectionContent = (props) => {
             )
         else 
             return (
-                <View style={{marginHorizontal: 20}}>
+                <View style={{marginHorizontal: 20, marginBottom: 15}}>
                     <View style={[styles.section_content_ctn]}>
                         <View style={styles.empty_data_ctn}>
                             <Text style={styles.empty_data_text}>Tu n'as pas encore créé de liste...</Text>

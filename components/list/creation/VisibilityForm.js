@@ -7,7 +7,7 @@ import Input from '../../utils/Input'
 const VisibilityForm = (props) => {
 
     // PROPS
-    const { isPublic, setIsPublic, setPassword } = props
+    const { isPublic, setIsPublic, setPassword, defaultValue } = props
 
     // HANDLE CLICK
     const handleClick = () => {
@@ -36,12 +36,17 @@ const VisibilityForm = (props) => {
                     svg="KeySvg"
                     width="100%"
                     onChangeText={setPassword}
+                    defaultValue={defaultValue}
                 />
                 <Text style={styles.input_text_infos}>Ne partagez ce mot de passe qu'avec les personnes dont vous autorisez l’accès à votre liste.</Text>
             </View>
         </View>
         
     )
+}
+
+VisibilityForm.defaultProps = {
+    defaultValue: ""
 }
 
 const styles = StyleSheet.create({

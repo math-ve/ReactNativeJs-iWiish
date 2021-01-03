@@ -20,7 +20,7 @@ const HomeSectionBtn = (props) => {
 
     if (section === "Mes listes")
         return (
-            <TouchableOpacity onPress={() => navigateTo("ListCreation")}>
+            <TouchableOpacity onPress={() => navigateTo("ListCreation")} style={{paddingLeft:15}}>
                 <PlusSvg />
             </TouchableOpacity>
         )

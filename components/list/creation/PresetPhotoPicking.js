@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Alert, ImageBackground } from 'react-native'
 // DEPENDENCIES
 import { BlurView } from '@react-native-community/blur'
 // STYLE
@@ -7,23 +7,17 @@ import { WhiteCrossSvg } from '../../../utils/svg/index_svg'
 import { FlatList } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 // COMPS
-import ListCover from './ListCover'
 import GradiantButton from '../../utils/GradiantButton'
-// FIREBASE
-import database from '@react-native-firebase/database'
-// UTILS
-import { delete_main_image_from_storage } from '../../../utils/storage/manage_storage'
 
 const PresetPhotoPicking = (props) => {
 
     // PROPS
-    const { handleBack, title, listId, setURL } = props
+    const { handleBack, setPATH } = props
 
     // LOCAL STATE
     const [selectedPhoto, setSelectedPhoto] = useState("unset")
 
     // REDUX
-    const UserData = useSelector(state => state.UserData)
     const presetImgUrls = useSelector(state => state.PresetImgUrls)
 
     // HANDLE CLICK
@@ -36,11 +30,9 @@ const PresetPhotoPicking = (props) => {
         if (selectedPhoto === "unset")
             Alert.alert("Oups", "Vous n'avez séléctionné aucune photo...")
         else {
-            setURL(selectedPhoto)
+            setPATH(selectedPhoto)
             handleBack(false)
-            delete_main_image_from_storage(UserData.userID, listId)
         }
-
     }
 
     return (
@@ -62,14 +54,11 @@ const PresetPhotoPicking = (props) => {
                         horizontal={true}
                         keyExtractor={item => item}
                         renderItem={(item) => (
-                            <ListCover
-                                type={1}
-                                title={title}
-                                imgUrl={item}
-                                title={title}
-                                selectedPhoto={selectedPhoto}
-                                handleClick={handlePhotoClick}    
-                            />
+                            <TouchableOpacity style={[styles.preset_item_ctn, item.item === selectedPhoto ? styles.selected : {}]} onPress={() => setSelectedPhoto(item.item)}>
+                                <ImageBackground source={{uri: item.item ? item.item : null}} style={{width: '100%', height: '100%'}} imageStyle={{borderRadius: 5}}>
+
+                                </ImageBackground>
+                            </TouchableOpacity>
                         )}
                     />
                 </View>                
@@ -100,6 +89,14 @@ const styles = StyleSheet.create({
     list_ctn: {
         height: 240
     },
+    preset_item_ctn: {
+        width: 170,
+        height: 235,
+        backgroundColor: '#FA7A47',
+        borderRadius: 5,
+        elevation: 10,
+        marginHorizontal: 10
+    },
     title_ctn: {
         alignItems: 'center'
     },
@@ -107,6 +104,10 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: 'Montserrat-SemiBold',
         fontSize: 23
+    },
+    selected: {
+        borderWidth: 3,
+        borderColor: 'white',
     }
 })
 

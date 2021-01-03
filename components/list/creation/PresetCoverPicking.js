@@ -8,24 +8,17 @@ import { WhiteCrossSvg } from '../../../utils/svg/index_svg'
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 // COMPS
-import ListCover from './ListCover'
 import GradiantButton from '../../utils/GradiantButton'
-// FIREBASE
-import database from '@react-native-firebase/database'
-import ListHorizontalCover from './ListHorizontalCover'
-// UTILS
-import { delete_cover_image_from_storage } from '../../../utils/storage/manage_storage'
 
 const PresetCoverPicking = (props) => {
 
     // PROPS
-    const { handleBack, listId, setURL } = props
+    const { handleBack, setPATH } = props
 
     // LOCAL STATE
     const [selectedPhoto, setSelectedPhoto] = useState("unset")
 
     // REDUX
-    const UserData = useSelector(state => state.UserData)
     const presetImgUrls = useSelector(state => state.PresetCoverUrls)
 
     // HANDLE SUBMIT
@@ -33,8 +26,7 @@ const PresetCoverPicking = (props) => {
         if (selectedPhoto === "unset")
             Alert.alert("Oups", "Vous n'avez séléctionné aucune photo...")
         else {
-            setURL(selectedPhoto)
-            delete_cover_image_from_storage(listId, UserData.userID)
+            setPATH(selectedPhoto)
             handleBack(false)
         }
     }

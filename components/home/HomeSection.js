@@ -7,7 +7,7 @@ import HomeSectionContent from './HomeSectionContent'
 
 const HomeSection = (props) => {
 
-    const { title, svg, button} = props
+    const { title, svg } = props
 
     return (
         <View style={[styles.section_ctn, title !== "Mes listes" ? {marginTop: 15} : {}, title === "Mes listes" ? {marginBottom: -15} : {}]}>
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 0,
+        alignItems: 'center'
     },
     section_title_ctn: {
         flexDirection: 'row',

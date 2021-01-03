@@ -10,12 +10,9 @@ import { useSelector } from 'react-redux'
 const ListVerticalCover = (props) => {
 
     // PROPS
-    const { handleClick, listId, photoURL } = props
+    const { handleClick, photoPATH } = props
 
-    // REDUX
-    const UserData = useSelector(state => state.UserData)
-
-    if (photoURL === null)
+    if (photoPATH === null)
         return (
             <TouchableOpacity style={[styles.ctn, {padding: 17}]} onPress={() => handleClick(true)}>
                 <CameraSvg />
@@ -25,7 +22,7 @@ const ListVerticalCover = (props) => {
     else
         return (
             <TouchableOpacity style={styles.ctn} onPress={() => handleClick(true)}>
-                <ImageBackground source={{uri : photoURL ? photoURL : null}} style={{width: '100%', height: '100%', justifyContent: 'flex-end'}} imageStyle={{resizeMode: "cover", borderRadius: 5}}>
+                <ImageBackground source={{uri : photoPATH}} style={{width: '100%', height: '100%', justifyContent: 'flex-end'}} imageStyle={{resizeMode: "cover", borderRadius: 5}}>
                     <LinearGradient
                         colors={['#00000000', '#000000']}
                         style={styles.choice_ctn}
