@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
 // SCREENS
 import SignIn from './screens/SignIn'
@@ -11,6 +11,8 @@ import Settings from './screens/Settings'
 import ListCreation from './screens/ListCreation'
 import Mylist from './screens/Mylist'
 import MylistEdit from './screens/MyListEdit'
+import IdeaCreation from './screens/IdeaCreation'
+import ItemEdit from './screens/ItemEdit'
 // REDUX
 import { useDispatch, useSelector } from 'react-redux'
 import { setLogStatus, savePresetImgUrls, savePresetCoverUrls } from './redux/actions/index_actions'
@@ -25,10 +27,43 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 // UTILS
 import { get_pictures_urls, get_covers_urls} from './utils/preset_images/get_preset_img_url'
+import { getDataFromUrl } from './utils/sharing/get_data_from_url'
+// SHARE TEST
+import ShareMenu from "react-native-share-menu"
+import UserProfile from './screens/UserProfile'
 
 const Stack = createStackNavigator();
 
 const App = () => {
+
+  // LOAL STATE
+  const [sharedData, setSharedData] = useState(null);
+  const [sharedMimeType, setSharedMimeType] = useState(null);
+  
+  const handleShare = useCallback((item) => {
+    if (!item) {
+      return;
+    }
+    const { mimeType, data, extraData } = item;
+    setSharedData(data);
+    setSharedMimeType(mimeType);
+  }, []);
+
+  useEffect(() => {
+    ShareMenu.getInitialShare(handleShare);
+  }, []);
+  
+  useEffect(() => {
+    const listener = ShareMenu.addNewShareListener(handleShare);
+  
+    return () => {
+      listener.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    getDataFromUrl(sharedData).then((res) => console.log(res))
+  }, [sharedData, sharedMimeType])
 
   // AUTHENTIFICATION WATCH FOR CHANGE
   const onAuthStateChanged = (user) => {
@@ -131,6 +166,9 @@ const App = () => {
             <Stack.Screen name="ListCreation" component={ListCreation} />
             <Stack.Screen name="MyList" component={Mylist} />
             <Stack.Screen name="MyListEdit" component={MylistEdit} />
+            <Stack.Screen name="IdeaCreation" component={IdeaCreation} />
+            <Stack.Screen name="ItemEdit" component={ItemEdit} />
+            <Stack.Screen name="UserProfile" component={UserProfile} />
           </Stack.Navigator>
         </NavigationContainer>
     )    

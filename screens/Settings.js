@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, SafeAreaView, Text, Image, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, View, SafeAreaView, Text, Image, TouchableOpacity, Alert, ScrollView } from 'react-native'
 // COMPS
 import TitleHeader from '../components/header/TitleHeader'
 import PhotoProfilePickBlured from '../components/photo_picker/PhotoProfilePickBlured'
@@ -166,7 +166,7 @@ const Settings = () => {
     return (
         <SafeAreaView style={{flex : 1}}>
             <TitleHeader title="Paramètres"/>
-            <View style={styles.ctn}>
+            <ScrollView style={styles.ctn} contentContainerStyle={styles.content_ctn}>
                 <View style={styles.img_ctn}>
                     <TouchableOpacity style={styles.outline_border} onPress={() => handleClickPhoto(true)}>
                         <Image
@@ -294,7 +294,7 @@ const Settings = () => {
                         <Text style={styles.deconnexion_text}>Se déconnecter</Text>
                     </TouchableOpacity>                        
                 </View>
-            </View>
+            </ScrollView>
             {isPhotoPicking ? 
                 <PhotoProfilePickBlured handleBack={handleClickPhoto}/> :
                 <></>
@@ -308,12 +308,17 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor:'#F0F1F5',
         paddingLeft: 20,
-        paddingRight:20
+        paddingRight:20,
+    },
+    content_ctn :{
+        justifyContent: 'space-around',
+        flexGrow: 1
     },
     img_ctn: {
-        flex: 34,
+        //flex: 34,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop : 15
     },
     outline_border: {
         width: 159,
@@ -339,7 +344,7 @@ const styles = StyleSheet.create({
         elevation: 10
     },
     form_ctn: {
-        flex: 40,
+        //flex: 40,
         justifyContent: 'space-between'
     },
     error_text: {
@@ -403,7 +408,7 @@ const styles = StyleSheet.create({
         color: "#FA7A47"
     },
     save_ctn: {
-        flex: 19,
+        //flex: 19,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -428,7 +433,7 @@ const styles = StyleSheet.create({
         paddingBottom:3
     },
     deconnexion_ctn: {
-        flex: 7,
+        //flex: 7,
         flexDirection:'row',
         justifyContent: 'center',
         alignItems: 'flex-start'

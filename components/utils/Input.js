@@ -2,21 +2,26 @@ import React from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
 // COMPS
 import Svg from '../utils/Svg'
+// android:windowSoftInputMode="adjustNothing">
 
 const Input = (props) => {
 
     // PROPS
-    const { placeholder, svg, width, onChangeText, defaultValue } = props
+    const { placeholder, svg, width, onChangeText, defaultValue, maxLength, multiline, numberOfLines, ctnHeight, textAlignVertical, keyboardType } = props
 
     return (
-        <View style={[styles.ctn, {width: width}]}>
+        <View style={[styles.ctn, {width: width}, {height: ctnHeight}]}>
             <TextInput
-                style={styles.input}
+                style={[styles.input, {textAlignVertical: textAlignVertical}]}
                 placeholder={placeholder}
-                maxLength={30}
+                maxLength={maxLength}
                 placeholderTextColor='#989898'
                 onChangeText={(text) => onChangeText(text)}
                 defaultValue={defaultValue}
+                multiline={multiline}
+                numberOfLines={numberOfLines}
+                textAlignVertical={textAlignVertical}
+                keyboardType={keyboardType}
             />
             <View style={styles.svg_ctn}>
                 <Svg svg={svg} />
@@ -26,7 +31,13 @@ const Input = (props) => {
 }
 
 Input.defaultProps = {
-    defaultValue: ""
+    defaultValue: "",
+    maxLength: 30,
+    multiline: false,
+    numberOfLines: 1,
+    ctnHeight: 50,
+    textAlignVertical: 'center',
+    keyboardType: "default"
 }
 
 const styles = StyleSheet.create({
@@ -44,7 +55,8 @@ const styles = StyleSheet.create({
     input: {
         fontFamily: 'Quicksand-Medium',
         fontSize: 16,
-        flex: 1
+        flex: 1,
+        height: '100%'
     },
     svg_ctn: {
         width: '12.5%',

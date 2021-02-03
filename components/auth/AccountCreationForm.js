@@ -207,17 +207,17 @@ const AccountCreationForm = (props) => {
 
 const styles = StyleSheet.create({
     form_ctn: {
-        flex: 43,
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingTop:15
+        paddingTop: 15,
+        height: 380,
     },
     inputs_ctn: {
-        flex: 63,
         justifyContent:'space-between',
         alignItems:'center',
         paddingTop:20,
         width:'100%',
+        height: '60%'
     },
     input_and_label_ctn: {
         width:'100%',
@@ -270,7 +270,6 @@ const styles = StyleSheet.create({
         position:'absolute'
     },
     btn_ctn: {
-        flex: 30,
         justifyContent: 'flex-end',
         paddingBottom:15
     },

@@ -7,61 +7,32 @@ import ImagePicker from 'react-native-image-crop-picker'
 import LinearGradient from 'react-native-linear-gradient'
 // STYLE
 import { CameraSvg, GallerySvg, WhiteCrossSvg } from '../../utils/svg/index_svg'
-// FIREBASE
-import storage from '@react-native-firebase/storage'
-import database from '@react-native-firebase/database'
-// REDUX
-import { useSelector } from 'react-redux'
 
-const PhotoProfilePickBlured = (props) => {
+const PhotoListPickBlured = (props) => {
 
     // PROPS
-    const { handleBack } = props
-
-    // REDUX
-    const UserData = useSelector(state => state.UserData);
-
-    // SEND IMG TO FIREBASE & GET URL
-    const saveImageFirebase = async (path) => {
-        const reference = storage().ref(`/users/${UserData.userID}/profile_picture.jpg`)
-        await reference.putFile(path)
-            .then(async () => {
-                const url = await storage()
-                    .ref(`/users/${UserData.userID}/profile_picture.jpg`)
-                    .getDownloadURL()
-                    .then((url) => saveUrlInDatabase(url))
-            })
-    }
-
-    // SAVE URL IN DATABASE
-    const saveUrlInDatabase = (url) => {
-        database()
-            .ref(`users/${UserData.userID}/infos/photoURL`)
-            .set(url)
-        database()
-            .ref(`profile_pictures/${UserData.userID}`)
-            .set(url)
-    }
-
-    // HANDLE CHOICE
-    const handleChoice = (source) => {
-        handleBack(false)
+    const { handleBack, setPATH } = props
+    
+    // HANDLE CHOICE 
+    const handleChoice = async (source) => {
         if (source === "camera") {
             ImagePicker.openCamera({
-                width:300,
-                height:300,
+                width:400,
+                height:400,
                 cropping: true,
             }).then(image => {
-                saveImageFirebase(image.path)
+                setPATH(image.path)
+                handleBack(false)
             })
         }
         else if (source === "gallery") {
             ImagePicker.openPicker({
-                width:300,
-                height:300,
+                width:400,
+                height:400,
                 cropping: true,
             }).then(image => {
-                saveImageFirebase(image.path)
+                setPATH(image.path)
+                handleBack(false)
             })
         }
     }
@@ -90,6 +61,7 @@ const PhotoProfilePickBlured = (props) => {
                     <GallerySvg />
                     <Text style={styles.choice_text}>Galerie</Text>
                 </TouchableOpacity>
+                <View style={styles.separator}></View>
             </LinearGradient>
             <View style={{position:'absolute', top: 20, width: '90%', alignItems: 'flex-end'}}>
                 <TouchableOpacity onPress={() => handleBack(false)}>
@@ -97,7 +69,6 @@ const PhotoProfilePickBlured = (props) => {
                 </TouchableOpacity>
             </View>
         </View>
-
     )
 }
 
@@ -116,12 +87,12 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'white',
         borderRadius: 10,
-        flexDirection: 'row',
         justifyContent:'space-evenly',
-        alignItems: 'center'
+        alignItems: 'center',
+        flexDirection: 'row'
     },
     separator: {
-        width: 2,
+        width: 1,
         height: '90%',
         backgroundColor: 'white',
         borderRadius: 50
@@ -129,7 +100,8 @@ const styles = StyleSheet.create({
     choice_item: {
         alignItems: 'center',
         justifyContent:'center',
-        padding: 30
+        padding: 15,
+        paddingHorizontal: 50
     },
     choice_text: {
         fontFamily: 'Montserrat-SemiBold',
@@ -144,4 +116,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default PhotoProfilePickBlured
+export default PhotoListPickBlured

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23.318" height="22.728" viewBox="0 0 23.318 22.728">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.924" y1="-0.114" x2="0.184" y2="1.027" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ff5791"/>
+      <stop offset="1" stop-color="#fa7a47"/>
+    </linearGradient>
+  </defs>
+  <path id="Icon_awesome-arrow-left" data-name="Icon awesome-arrow-left" d="M13.4,23.853l-1.155,1.155a1.244,1.244,0,0,1-1.764,0L.363,14.9a1.244,1.244,0,0,1,0-1.764L10.481,3.014a1.244,1.244,0,0,1,1.764,0L13.4,4.17a1.25,1.25,0,0,1-.021,1.785L7.108,11.929H22.066a1.246,1.246,0,0,1,1.249,1.249v1.665a1.246,1.246,0,0,1-1.249,1.249H7.108l6.271,5.975A1.241,1.241,0,0,1,13.4,23.853Z" transform="translate(0.004 -2.647)" fill="url(#linear-gradient)"/>
+</svg>

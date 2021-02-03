@@ -51,9 +51,11 @@ const ProfilePhotoEdit = (props) => {
 
 const styles = StyleSheet.create({
     photo_container: {
-        flex: 23,
         alignItems: 'center',
         justifyContent: 'center',
+        height:165,
+        width: 165,
+        alignSelf: 'center'
     },
     photo_border: {
         borderWidth: 2,

@@ -10,8 +10,8 @@ const HomeSection = (props) => {
     const { title, svg } = props
 
     return (
-        <View style={[styles.section_ctn, title !== "Mes listes" ? {marginTop: 15} : {}, title === "Mes listes" ? {marginBottom: -15} : {}]}>
-            <View style={[styles.section_header, title === "Mes listes" ? {paddingHorizontal: 20} : {}]}>
+        <View style={[styles.section_ctn, title === "Mes listes" ? {marginBottom: -30} : {}]}>
+            <View style={[styles.section_header, title === "Mes listes"  || title === "Mes favoris" ? {paddingHorizontal: 20} : {}]}>
                 <View style={[styles.section_title_ctn]}>
                     <Text style={[styles.section_title]}>{title}</Text>
                     <View style={[styles.title_svg_ctn]}>
@@ -31,8 +31,6 @@ const styles = StyleSheet.create({
     section_ctn: {
         width: '100%',
         marginTop: 20,
-        // borderWidth: 2,
-        // borderColor: 'black'
     },
     section_header: {
         flexDirection: 'row',
@@ -53,8 +51,6 @@ const styles = StyleSheet.create({
         marginLeft: 7,
         paddingTop: 3
     },
-
-
     section_content_ctn: {
         minHeight: 50,
         width: '100%',
@@ -62,7 +58,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         elevation: 10
     }
-
 })
 
 export default HomeSection

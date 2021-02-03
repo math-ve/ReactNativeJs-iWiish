@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, TextInput, Alert, ScrollView, SafeAreaView } from 'react-native'
 // STYLE
 import LinearGradient from 'react-native-linear-gradient'
 import { MailSvg, KeySvg, CrossSvg, CheckSvg } from '../utils/svg/index_svg'
@@ -55,138 +55,145 @@ const SignUp = (props) => {
     }
 
     return (
-        <View style={styles.container}>
-            <AuthHero />
-            <View style={styles.content_container}>
-                <View style={styles.title_container}>
-                    <Text style={styles.title}>Crée ton compte</Text>
-                </View>
-                <View style={styles.form_container}>
-                    <View>
-                        <View style={[styles.input_container, input1Focus ? {backgroundColor: 'white'} : {}]}>
-                            <View style={styles.svg_left_container}>
-                                <CheckSvg style={[styles.svg_left, isEmailValid === true ? {display : 'flex'} : {display : 'none'}]}/>
-                            </View>
-                            <View style={styles.svg_left_container}>
-                                <CrossSvg style={[styles.svg_left, isEmailValid === false ? {display : 'flex'} : {display : 'none'}]}/>
-                            </View>
-                            <TextInput
-                                style={styles.inputs}
-                                placeholder="Adresse e-mail"
-                                onFocus={() => setInput1Focus(true)}
-                                onChangeText={(text) => {
-                                    setEmail(text)
-                                    setIsEmailAlreadyUsed(false)
-                                }}
-                                onBlur={() => {
-                                    setInput1Focus(false);
-                                    setIsEmailValid(email_validation(email));
-                                }}
-                            />
-                            <MailSvg width={20} height={14} style={styles.svg}/>
-                        </View>
-                        <View style={[styles.error_container, isEmailValid === false ? {display: 'flex'} : {display : 'none'}]}>
-                            <Text style={styles.error_text}>Adresse e-mail invalide</Text>
-                        </View>                        
-                        <View style={[styles.error_container, isEmailAlreadyUsed ? {display: 'flex'} : {display : 'none'}]}>
-                            <Text style={styles.error_text}>Cette adresse est déjà utilisée</Text>
-                        </View>                        
+        <SafeAreaView style={{flex:1}}>
+            <ScrollView style={styles.scroll_ctn} contentContainerStyle={styles.scroll_ctn_content}>
+                <AuthHero />
+                <View style={styles.content_container}>
+                    <View style={styles.title_container}>
+                        <Text style={styles.title}>Crée ton compte</Text>
                     </View>
-                    <View>
-                        <View style={[styles.input_container, input2Focus ? {backgroundColor: 'white'} : {}]}>
-                            <View style={styles.svg_left_container}>
-                                <CheckSvg style={[styles.svg_left, isPassValid === true ? {display : 'flex'} : {display : 'none'}]}/>
+                    <View style={styles.form_container}>
+                        <View>
+                            <View style={[styles.input_container, input1Focus ? {backgroundColor: 'white'} : {}]}>
+                                <View style={styles.svg_left_container}>
+                                    <CheckSvg style={[styles.svg_left, isEmailValid === true ? {display : 'flex'} : {display : 'none'}]}/>
+                                </View>
+                                <View style={styles.svg_left_container}>
+                                    <CrossSvg style={[styles.svg_left, isEmailValid === false ? {display : 'flex'} : {display : 'none'}]}/>
+                                </View>
+                                <TextInput
+                                    style={styles.inputs}
+                                    placeholder="Adresse e-mail"
+                                    onFocus={() => setInput1Focus(true)}
+                                    onChangeText={(text) => {
+                                        setEmail(text)
+                                        setIsEmailAlreadyUsed(false)
+                                    }}
+                                    onBlur={() => {
+                                        setInput1Focus(false);
+                                        setIsEmailValid(email_validation(email));
+                                    }}
+                                />
+                                <MailSvg width={20} height={14} style={styles.svg}/>
                             </View>
-                            <View style={styles.svg_left_container}>
-                                <CrossSvg style={[styles.svg_left, isPassValid === false ? {display : 'flex'} : {display : 'none'}]}/>
-                            </View>
-                            <TextInput
-                                style={styles.inputs}
-                                placeholder="Mot de passe"
-                                secureTextEntry={true}
-                                onFocus={() => {
-                                    setInput2Focus(true)
-                                }}
-                                onBlur={() => {
-                                    setInput2Focus(false)
-                                    setIsPassValid(is_pass_valid(password))
-                                }}
-                                onChangeText={(text) => setPassword(text)}
-                            />
-                            <KeySvg width={20} height={19} style={styles.svg}/>
+                            <View style={[styles.error_container, isEmailValid === false ? {display: 'flex'} : {display : 'none'}]}>
+                                <Text style={styles.error_text}>Adresse e-mail invalide</Text>
+                            </View>                        
+                            <View style={[styles.error_container, isEmailAlreadyUsed ? {display: 'flex'} : {display : 'none'}]}>
+                                <Text style={styles.error_text}>Cette adresse est déjà utilisée</Text>
+                            </View>                        
                         </View>
-                        <View style={[styles.error_container, isPassValid === false ? {display: 'flex'} : {display : 'none'}]}>
-                            <Text style={styles.error_text}>(6 Caractères minimums dont un chiffre et une majuscule)</Text>
-                        </View>                        
-                    </View>
-                    
-                    <View>
-                        <View style={[styles.input_container, input3Focus ? {backgroundColor: 'white'} : {}]}>
-                            <View style={styles.svg_left_container}>
-                                <CheckSvg style={[styles.svg_left, doPassMatch === true ? {display : 'flex'} : {display : 'none'}]}/>
+                        <View>
+                            <View style={[styles.input_container, input2Focus ? {backgroundColor: 'white'} : {}]}>
+                                <View style={styles.svg_left_container}>
+                                    <CheckSvg style={[styles.svg_left, isPassValid === true ? {display : 'flex'} : {display : 'none'}]}/>
+                                </View>
+                                <View style={styles.svg_left_container}>
+                                    <CrossSvg style={[styles.svg_left, isPassValid === false ? {display : 'flex'} : {display : 'none'}]}/>
+                                </View>
+                                <TextInput
+                                    style={styles.inputs}
+                                    placeholder="Mot de passe"
+                                    secureTextEntry={true}
+                                    onFocus={() => {
+                                        setInput2Focus(true)
+                                    }}
+                                    onBlur={() => {
+                                        setInput2Focus(false)
+                                        setIsPassValid(is_pass_valid(password))
+                                    }}
+                                    onChangeText={(text) => setPassword(text)}
+                                />
+                                <KeySvg width={20} height={19} style={styles.svg}/>
                             </View>
-                            <View style={styles.svg_left_container}>
-                                <CrossSvg style={[styles.svg_left, (doPassMatch === false && password !== "") ? {display : 'flex'} : {display : 'none'}]}/>
-                            </View>
-                            <TextInput
-                                style={styles.inputs}
-                                placeholder="Vérifiez votre mot de passe"
-                                secureTextEntry={true}
-                                onFocus={() => setInput3Focus(true)}
-                                onBlur={() => {
-                                    setInput3Focus(false)
-                                    setDoPassMatch(does_they_match(password, passwordConf))
-                                }}
-                                onChangeText={(text) => setPasswordConf(text)}
-                            />
-                            <KeySvg width={20} height={19} style={styles.svg}/>
+                            <View style={[styles.error_container, isPassValid === false ? {display: 'flex'} : {display : 'none'}]}>
+                                <Text style={styles.error_text}>(6 Caractères minimums dont un chiffre et une majuscule)</Text>
+                            </View>                        
                         </View>
-                        <View style={[styles.error_container, (doPassMatch === false && password !== "") ? {display: 'flex'} : {display : 'none'}]}>
-                            <Text style={styles.error_text}>Les mots de passes ne correspondent pas</Text>
-                        </View>                         
+                        
+                        <View>
+                            <View style={[styles.input_container, input3Focus ? {backgroundColor: 'white'} : {}]}>
+                                <View style={styles.svg_left_container}>
+                                    <CheckSvg style={[styles.svg_left, doPassMatch === true ? {display : 'flex'} : {display : 'none'}]}/>
+                                </View>
+                                <View style={styles.svg_left_container}>
+                                    <CrossSvg style={[styles.svg_left, (doPassMatch === false && password !== "") ? {display : 'flex'} : {display : 'none'}]}/>
+                                </View>
+                                <TextInput
+                                    style={styles.inputs}
+                                    placeholder="Vérifiez votre mot de passe"
+                                    secureTextEntry={true}
+                                    onFocus={() => setInput3Focus(true)}
+                                    onBlur={() => {
+                                        setInput3Focus(false)
+                                        setDoPassMatch(does_they_match(password, passwordConf))
+                                    }}
+                                    onChangeText={(text) => setPasswordConf(text)}
+                                />
+                                <KeySvg width={20} height={19} style={styles.svg}/>
+                            </View>
+                            <View style={[styles.error_container, (doPassMatch === false && password !== "") ? {display: 'flex'} : {display : 'none'}]}>
+                                <Text style={styles.error_text}>Les mots de passes ne correspondent pas</Text>
+                            </View>                         
+                        </View>
+        
+                        <TouchableOpacity style={[styles.button, styles.shadow]} onPress={() => createNewUserWithMail()}>
+                            <LinearGradient
+                                colors={['#FA7A47', '#FF5791']}
+                                style={styles.linear_gradient_btn}
+                                start={{x : 0.013, y : 1}}
+                                end={{x : 1.829, y : -1.093}}
+                            >
+                                <Text style={styles.button_text}>S'inscrire</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
                     </View>
-    
-                    <TouchableOpacity style={[styles.button, styles.shadow]} onPress={() => createNewUserWithMail()}>
-                        <LinearGradient
-                            colors={['#FA7A47', '#FF5791']}
-                            style={styles.linear_gradient_btn}
-                            start={{x : 0.013, y : 1}}
-                            end={{x : 1.829, y : -1.093}}
-                        >
-                            <Text style={styles.button_text}>S'inscrire</Text>
-                        </LinearGradient>
-                    </TouchableOpacity>
+                    <View style={styles.ou_container}>
+                        <Text style={styles.ou}>Ou</Text>
+                    </View>
+                    <AuthSocials />
+                    <AuthNav 
+                        to="SignIn"
+                        text="Déjà inscrit ?"
+                        link="Connecte-toi"
+                        navigation={navigation}
+                    />
                 </View>
-                <View style={styles.ou_container}>
-                    <Text style={styles.ou}>Ou</Text>
-                </View>
-                <AuthSocials />
-                <AuthNav 
-                    to="SignIn"
-                    text="Déjà inscrit ?"
-                    link="Connecte-toi"
-                    navigation={navigation}
-                />
-            </View>
-        </View>
+            </ScrollView>            
+        </SafeAreaView>
+        
     )
 }   
 
 const styles = StyleSheet.create({
-    container : {
+    scroll_ctn : {
         flex: 1,
         backgroundColor:'#F0F1F5'
     },
+    scroll_ctn_content: {
+        minHeight: '100%'
+    },
     content_container: {
-        flex: 3,
         alignItems: 'center',
         paddingLeft: 20,
         paddingRight: 20,
+        marginTop: 35,
+        flex: 1
     },
-    title_container: {
-        flex: 23,        
+    title_container: { 
         justifyContent: 'center',
         alignItems: 'center',
+        marginBottom: 30
     },
     title: {
         fontSize: 19,
@@ -194,9 +201,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat-SemiBold',
     },
     form_container: {
-        height: 180,
-        flex: 44,
-        height: '100%',
+        height: 195,
         justifyContent: 'space-between',
         alignItems: 'center',
     },
@@ -222,6 +227,7 @@ const styles = StyleSheet.create({
     },
     button: {
         borderRadius: 5,
+        marginTop:15
     },
     linear_gradient_btn : {
         borderRadius: 10,
@@ -238,8 +244,8 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     ou_container: {
-        flex: 14,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginVertical: 15
     },
     ou: {
         fontSize: 19,

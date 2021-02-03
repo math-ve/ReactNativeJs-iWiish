@@ -1,6 +1,6 @@
 import React from 'react'
 // STYLE
-import { PlusSvg, StarSvg, ListSvg, LockSvg, TitleSvg, KeySvg } from '../../utils/svg/index_svg'
+import { PlusSvg, StarSvg, ListSvg, LockSvg, TitleSvg, KeySvg, EuroSvg, LangSvg } from '../../utils/svg/index_svg'
 
 const HomeSvg = (props) => {
 
@@ -30,6 +30,18 @@ const HomeSvg = (props) => {
     else if (svg === "KeySvg")
         return (
             <KeySvg />
+        )
+    else if (svg === "EuroSvg")
+        return (
+            <EuroSvg />
+        )
+    else if (svg === "LangSvg")
+        return (
+            <LangSvg />
+        )
+    else
+        return (
+            <></>
         )
 }
 

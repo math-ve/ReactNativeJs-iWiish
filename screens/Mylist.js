@@ -5,6 +5,8 @@ import { useEffect } from 'react/cjs/react.development'
 // COMPS
 import TitleHeader from '../components/header/TitleHeader'
 import MyListCover from '../components/list/mylist/MyListCover'
+import GuideFooter from '../components/utilisation_guide/GuideFooter'
+import MyListItem from '../components/list/mylist/MyListItem'
 // DEPENDENCIES
 import LinearGradient from 'react-native-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
@@ -14,7 +16,6 @@ import { AddCrossSvg, EmptyBoxSvg } from '../utils/svg/index_svg'
 import database from '@react-native-firebase/database'
 // REDUX
 import { useSelector } from 'react-redux'
-import GuideFooter from '../components/utilisation_guide/GuideFooter'
 
 const MyList = (props) => {
 
@@ -23,6 +24,7 @@ const MyList = (props) => {
 
     // LOCAL STATE
     const [listData, setListData] = useState(null)
+    const [items, setItems] = useState(null)
 
     // REDUX
     const UserData = useSelector(state => state.UserData)
@@ -44,25 +46,45 @@ const MyList = (props) => {
         }
     }, [route, UserData])
 
+    // HANDLE CLICK ADD NEW ITEM
+    const handleClickNewItem = () => {
+        navigation.navigate('IdeaCreation', {listId: listData.listID})
+    }
+
+    useEffect(() => {
+        if (listData && listData.items)
+            setItems(Object.entries(listData.items))
+        else if (listData && listData.items === undefined)
+            setItems(null)
+    }, [listData])
+
     return (
         <SafeAreaView style={{flex:1}}>
             <TitleHeader title="Ma liste"/>
 
             <ScrollView style={styles.scroll_ctn} contentContainerStyle={styles.scroll_ctn_content}>
-                <MyListCover listData={listData}/>
-                {listData && listData.items ? 
-                    <></> : 
-                    <View style={styles.empty_data_ctn}>
-                        <EmptyBoxSvg />
-                        <Text style={styles.empty_data_text}>Aucun article n'a encore été ajouté</Text>
-                    </View>                    
-                }
+                    <View>
+                        <MyListCover listData={listData}/>
+                        {items ? 
+                            items.map((item, index) => (
+                                <MyListItem data={item} key={item.index}/>
+                            )) : 
+                            <View style={styles.empty_data_ctn}>
+                                <EmptyBoxSvg />
+                                <Text style={styles.empty_data_text}>Aucun article n'a encore été ajouté</Text>
+                            </View>                    
+                        }                        
+                    </View>
 
-                <GuideFooter />
+                    <View style={{position: 'absolute', bottom: 0, alignSelf: 'center'}}>
+                        <GuideFooter />
+                    </View>
+                    
+
             </ScrollView>
-
+            
             <View style={styles.btn_ctn}>
-                <TouchableWithoutFeedback style={styles.btn} onPress={() => console.log("hey")}>
+                <TouchableWithoutFeedback style={styles.btn} onPress={() => handleClickNewItem()}>
                     <LinearGradient
                         colors={['#FA7A47', '#FF5791']}
                         style={{flex : 1}}
@@ -83,14 +105,15 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     scroll_ctn_content: {
-        justifyContent: 'space-between',
-        flexGrow: 1,
         paddingHorizontal: 20,
+        paddingBottom: 50,
+        minHeight: '85%'
     },
     empty_data_ctn: {
         width: '100%',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: '65%'
     },
     empty_data_text: {
         color: '#C6C6C6',
@@ -102,7 +125,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'flex-end',
         position: 'absolute',
-        bottom: 0
+        bottom: 20,
     },
     btn: {
         right: 0,

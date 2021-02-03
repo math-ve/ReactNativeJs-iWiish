@@ -16,6 +16,7 @@ import UserSvg from '../../assets/svg/user.svg'
 import LangSvg from '../../assets/svg/language.svg'
 import PlusSvg from '../../assets/svg/plus.svg'
 import ListSvg from '../../assets/svg/list.svg'
+import List2Svg from '../../assets/svg/list2.svg'
 import LockSvg from '../../assets/svg/lock.svg'
 import LockLSvg from '../../assets/svg/lock_l.svg'
 import StarSvg from '../../assets/svg/star.svg'
@@ -26,6 +27,10 @@ import EditSquareSvg from '../../assets/svg/edit_square.svg'
 import AddCrossSvg from '../../assets/svg/add_cross.svg'
 import RedTrashSvg from '../../assets/svg/red_trash.svg'
 import EmptyBoxSvg from '../../assets/svg/empty_box.svg'
+import EuroSvg from '../../assets/svg/euro.svg'
+import BackArrowSvg from '../../assets/svg/back_arrow.svg'
+import GreyStarSvg from '../../assets/svg/grey_star.svg'
+import Star2Svg from '../../assets/svg/star2.svg'
 
 export {
     MailSvg,
@@ -46,6 +51,7 @@ export {
     LangSvg,
     PlusSvg,
     ListSvg,
+    List2Svg,
     LockSvg,
     LockLSvg,
     StarSvg,
@@ -55,5 +61,9 @@ export {
     EditSquareSvg,
     AddCrossSvg,
     RedTrashSvg,
-    EmptyBoxSvg
+    EmptyBoxSvg,
+    EuroSvg,
+    BackArrowSvg,
+    GreyStarSvg,
+    Star2Svg
 }

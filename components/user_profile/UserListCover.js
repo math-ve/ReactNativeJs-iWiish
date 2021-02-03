@@ -1,39 +1,22 @@
 import React from 'react'
-import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback, TouchableHighlight } from 'react-native'
+import { ImageBackground, StyleSheet, Text, View, TouchableHighlight } from 'react-native'
 import { useEffect, useState } from 'react/cjs/react.development'
 // DEPENDENCIES
 import LinearGradient from 'react-native-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
-// FIREBASE
-import database from '@react-native-firebase/database'
-// REDUX
-import { useSelector } from 'react-redux'
 // STYLE
 import { LockLSvg, OpenLockSvg } from '../../utils/svg/index_svg'
 
-const HomeListCover = (props) => {
+const UserListCover = (props) => {
 
     // PROPS
-    const { listId, index, nbrLists } = props
+    const { listData, index, nbrLists } = props
 
     // LOCAL STATE
-    const [listData, setListData] = useState(null)
     const [nbrItems, setNbrItems] = useState(0)
 
     // NAVIGATION
     const navigation = useNavigation()
-
-    // REDUX
-    const UserData = useSelector(state => state.UserData)
-
-    // GET LIST DATA FROM DATABASE
-    useEffect(() => {           // RETURN ?
-        database()
-            .ref(`/users/${UserData.userID}/lists/${listId}/`)
-            .on('value', (snapshot) => {
-                setListData(snapshot.val())
-            })
-    }, [listId])
 
     // COUNT NBR OF ITEM IN LIST
     useEffect(() => {
@@ -47,7 +30,7 @@ const HomeListCover = (props) => {
 
     // NAVIGATE TO MYLIST
     const handleNavigate = () => {
-        navigation.navigate("MyList", {listId: listId})
+        navigation.navigate("MyList", {listId: listId})    // A CHANGER
     }
 
     return (
@@ -122,4 +105,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default HomeListCover
+export default UserListCover

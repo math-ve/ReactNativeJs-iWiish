@@ -25,14 +25,10 @@ const delete_main_image_from_storage = async (listId, userId) => {    // DELETE 
 
 const delete_cover_image_from_storage = async (listId, userId) => {    // DELETE COVER IMAGE FROM STORAGE IF IT EXISTS
 
-    console.log(userId)
-    console.log(listId)
-
     const ref = storage().ref(`/users/${userId}/lists/${listId}/cover_picture.jpg`)
 
     try {
         await ref.getDownloadURL().then(() => {
-            console.log("in it")
             storage().ref(`/users/${userId}/lists/${listId}/cover_picture.jpg`).delete()
         })
     } catch (err) {
@@ -40,8 +36,23 @@ const delete_cover_image_from_storage = async (listId, userId) => {    // DELETE
     }
 }
 
+const delete_item_photo = async (userId, listId, itemId) => {
+
+    const ref = storage().ref(`/users/${userId}/lists/${listId}/items/${itemId}.jpg`)
+
+    try {
+        await ref.getDownloadURL().then(() => {
+            storage().ref(`/users/${userId}/lists/${listId}/items/${itemId}.jpg`).delete()
+        })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+
 export {
     delete_main_image_from_storage,
     delete_cover_image_from_storage,
-    import_file_to_storage_and_get_url
+    import_file_to_storage_and_get_url,
+    delete_item_photo
 }

@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react/cjs/react.development'
 import database from '@react-native-firebase/database'
 // COMPS
 import HomeListCover from './HomeListCover'
+import FavItem from './FavItem'
+import FavContainer from './FavContainer'
 
 const HomeSectionContent = (props) => {
 
@@ -22,11 +24,12 @@ const HomeSectionContent = (props) => {
     const UserData = useSelector(state => state.UserData)
 
     // SAVE LIST IN LOCAL STATE FROM DATABASE
-    useEffect(() => {
+    useEffect(() => {           // RETURN ??
         database()
             .ref(`/users/${UserData.userID}/lists/`)
             .on('value', snapshot => {
-                setLists(snapshot.val())
+                if (snapshot.val())
+                    setLists(Object.values(snapshot.val()))
             })
     },[UserData.userID])
 
@@ -41,7 +44,7 @@ const HomeSectionContent = (props) => {
             return (
                 <View style={[styles.lists_ctn]}>
                     <FlatList 
-                        data={lists ? Object.values(lists) : []}
+                        data={lists ? lists : []}
                         keyExtractor={(index) => index.listID}
                         renderItem={(item) => (
                             <HomeListCover listId={item.item.listID} index={item.index} nbrLists={nbrLists}/>
@@ -80,11 +83,9 @@ const HomeSectionContent = (props) => {
             )
     }
     else if (section === "Mes favoris") {
-        if (UserData.favourite)
+        if (UserData.favorites)
             return (
-                <View>
-                    <Text>THERE ARE fav</Text>
-                </View>
+                <FavContainer />
             )
         else 
             return (
@@ -117,7 +118,11 @@ const styles = StyleSheet.create({
         fontSize: 15
     },
     lists_ctn: {
-        //marginBottom: -12.5,
+        minHeight: 270,
+        paddingBottom: 10
+    },
+    fav_ctn: {
+        marginBottom: 50,
     }
 })
 

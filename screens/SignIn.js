@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, TextInput } from 'react-native'
+import { StyleSheet, Text, View, TextInput, ScrollView, SafeAreaView } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 // STYLE
 import LinearGradient from 'react-native-linear-gradient'
@@ -49,100 +49,108 @@ const SignIn = (props) => {
     }
 
     return (
-        <View style={styles.container}>
-            <AuthHero />
-            <View style={styles.content_container}>
-                <View style={styles.title_container}>
-                    <Text style={styles.title}>Connecte-toi</Text>
-                </View>
-                <View style={styles.form_container}>
-                    <View>
-                        <View style={[styles.input_container, input1Focus ? {backgroundColor: 'white'} : {}]}>
-                            <TextInput
-                                style={styles.inputs}
-                                placeholder="Adresse e-mail"
-                                onFocus={() => {
-                                    setInput1Focus(true)
-                                    setIsEmailValid("unset")
-                                    setIsUserWithThisEmail("unset")
-                                }}
-                                onBlur={() => {
-                                    setInput1Focus(false)
-                                    setIsEmailValid(is_email_valid(email))
-                                }}
-                                onChangeText={(text) => setEmail(text)}
-                            />
-                            <MailSvg width={20} height={14} style={styles.svg}/>
-                        </View>
-                        <View style={[styles.error_ctn, isEmailValid === false ? {display: 'flex'} : {display : 'none'}]}>
-                            <Text style={styles.error_text}>Adresse e-mail invalide</Text>
-                        </View>                        
-                        <View style={[styles.error_ctn, isUserWithThisEmail === false ? {display: 'flex'} : {display : 'none'}]}>
-                            <Text style={styles.error_text}>Aucun compte iWiish trouvé avec cette adresse</Text>
-                        </View>                        
+        <SafeAreaView style={{flex:1}}>
+            <ScrollView style={styles.scroll_ctn} contentContainerStyle={styles.scroll_ctn_content}>
+                <AuthHero />
+                <View style={styles.content_container}>
+                    <View style={styles.title_container}>
+                        <Text style={styles.title}>Connecte-toi</Text>
                     </View>
-                    
-                    <View>
-                        <View style={[styles.input_container, input2Focus ? {backgroundColor: 'white'} : {}]}>
-                            <TextInput
-                                style={styles.inputs}
-                                placeholder="Mot de passe"
-                                secureTextEntry={true}
-                                onFocus={() => {
-                                    setInput2Focus(true)
-                                    setIsWrongPassword("unset")
-                                }}
-                                onBlur={() => setInput2Focus(false)}
-                                onChangeText={(text) => setPassword(text)}
-                            />
-                            <KeySvg width={20} height={19} style={styles.svg}/>
+                    <View style={styles.form_container}>
+                        <View>
+                            <View style={[styles.input_container, input1Focus ? {backgroundColor: 'white'} : {}]}>
+                                <TextInput
+                                    style={styles.inputs}
+                                    placeholder="Adresse e-mail"
+                                    onFocus={() => {
+                                        setInput1Focus(true)
+                                        setIsEmailValid("unset")
+                                        setIsUserWithThisEmail("unset")
+                                    }}
+                                    onBlur={() => {
+                                        setInput1Focus(false)
+                                        setIsEmailValid(is_email_valid(email))
+                                    }}
+                                    onChangeText={(text) => setEmail(text)}
+                                />
+                                <MailSvg width={20} height={14} style={styles.svg}/>
+                            </View>
+                            <View style={[styles.error_ctn, isEmailValid === false ? {display: 'flex'} : {display : 'none'}]}>
+                                <Text style={styles.error_text}>Adresse e-mail invalide</Text>
+                            </View>                        
+                            <View style={[styles.error_ctn, isUserWithThisEmail === false ? {display: 'flex'} : {display : 'none'}]}>
+                                <Text style={styles.error_text}>Aucun compte iWiish trouvé avec cette adresse</Text>
+                            </View>                        
                         </View>
-                        <View style={[styles.error_ctn, isWrongPassword === true ? {display: 'flex'} : {display : 'none'}]}>
-                            <Text style={styles.error_text}>Mot de passe incorrect</Text>
-                        </View>                
-                    </View>
+                        
+                        <View>
+                            <View style={[styles.input_container, input2Focus ? {backgroundColor: 'white'} : {}]}>
+                                <TextInput
+                                    style={styles.inputs}
+                                    placeholder="Mot de passe"
+                                    secureTextEntry={true}
+                                    onFocus={() => {
+                                        setInput2Focus(true)
+                                        setIsWrongPassword("unset")
+                                    }}
+                                    onBlur={() => setInput2Focus(false)}
+                                    onChangeText={(text) => setPassword(text)}
+                                />
+                                <KeySvg width={20} height={19} style={styles.svg}/>
+                            </View>
+                            <View style={[styles.error_ctn, isWrongPassword === true ? {display: 'flex'} : {display : 'none'}]}>
+                                <Text style={styles.error_text}>Mot de passe incorrect</Text>
+                            </View>                
+                        </View>
 
-                    <TouchableOpacity style={[styles.button, styles.shadow]} onPress={() => handleSubmit()}>
-                        <LinearGradient
-                            colors={['#FA7A47', '#FF5791']}
-                            style={styles.linear_gradient_btn}
-                            start={{x : 0.013, y : 1}}
-                            end={{x : 1.829, y : -1.093}}
-                        >
-                            <Text style={styles.button_text}>S'identifier</Text>
-                        </LinearGradient>
-                    </TouchableOpacity>
+                        <TouchableOpacity style={[styles.button, styles.shadow]} onPress={() => handleSubmit()}>
+                            <LinearGradient
+                                colors={['#FA7A47', '#FF5791']}
+                                style={styles.linear_gradient_btn}
+                                start={{x : 0.013, y : 1}}
+                                end={{x : 1.829, y : -1.093}}
+                            >
+                                <Text style={styles.button_text}>S'identifier</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.ou_container}>
+                        <Text style={styles.ou}>Ou</Text>
+                    </View>
+                    <AuthSocials />
+                    <AuthNav 
+                        to="SignUp"
+                        text="Nouveau ici ?"
+                        link="S'inscrire"
+                        navigation={navigation}
+                    />
                 </View>
-                <View style={styles.ou_container}>
-                    <Text style={styles.ou}>Ou</Text>
-                </View>
-                <AuthSocials />
-                <AuthNav 
-                    to="SignUp"
-                    text="Nouveau ici ?"
-                    link="S'inscrire"
-                    navigation={navigation}
-                />
-            </View>
-        </View>
+            </ScrollView>
+        </SafeAreaView>
+        
     )
 }
 
 const styles = StyleSheet.create({
-    container : {
+    scroll_ctn : {
         flex: 1,
-        backgroundColor:'#F0F1F5'
+        backgroundColor:'#F0F1F5',
+    },
+    scroll_ctn_content: {
+        //justifyContent: 'space-between',
+        minHeight: '100%'
     },
     content_container: {
-        flex: 3,
         alignItems: 'center',
         paddingLeft: 20,
         paddingRight: 20,
+        marginTop: 35,
+        flex: 1,
     },
-    title_container: {
-        flex: 23,        
+    title_container: {      
         justifyContent: 'center',
         alignItems: 'center',
+        marginBottom: 30,
     },
     title: {
         fontSize: 19,
@@ -151,8 +159,6 @@ const styles = StyleSheet.create({
     },
     form_container: {
         height: 180,
-        flex: 33,
-        height: '100%',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
@@ -198,8 +204,8 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     ou_container: {
-        flex: 14,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginVertical: 15
     },
     ou: {
         fontSize: 19,

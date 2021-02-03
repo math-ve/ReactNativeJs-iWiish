@@ -49,15 +49,17 @@ TitleHeader.defaultProps = {
 
 const styles = StyleSheet.create({
     ctn: {
-        height: '15%',
+        minHeight: '15%',
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingTop: 40,
+        paddingTop: '10%',
         paddingLeft: 20,
         paddingRight: 20,
-        paddingBottom: 10
+        paddingBottom: 10,
+        paddingBottom: '3%',
     },
     back_btn_ctn: {
         width: 49

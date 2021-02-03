@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View, ScrollView, KeyboardAvoidingView } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 // STYLE
 import LinearGradient from 'react-native-linear-gradient'
@@ -57,43 +57,49 @@ const AccountCreation = () => {
     }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={{flex:1}}>
             <LinearGradient
                 colors={['#FA7A47', '#FF5791']}
                 style={styles.container_bg}
                 start={{x : 0.013, y : 1}}
                 end={{x : 1.829, y : 1}}
             >
-                <View style={styles.header_container}>
-                    <LogoSvg />
-                    <Text style={styles.logo}>iWiish</Text>
-                </View>
-                <ProfilePhotoEdit handleClick={handleClickPhoto}/>
-                <AccountCreationForm handleSubmit={handleSubmit}/>
-                <View style={styles.back_container}>
-                    <TouchableOpacity onPress={() => signOut()}>
-                        <Text style={styles.back_text}>Retour</Text>
-                    </TouchableOpacity>
+                <View style={styles.scroll_ctn} contentContainerStyle={styles.scroll_ctn_content}>
+                    <View style={styles.header_container}>
+                        <LogoSvg />
+                        <Text style={styles.logo}>iWiish</Text>
+                    </View>
+                    <ProfilePhotoEdit handleClick={handleClickPhoto}/>
+                    <AccountCreationForm handleSubmit={handleSubmit}/>
+                    <View style={styles.back_container}>
+                        <TouchableOpacity onPress={() => signOut()}>
+                            <Text style={styles.back_text}>Retour</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {isPhotoPicking ? 
+                        <PhotoProfilePickBlured handleBack={handleClickPhoto}/> :
+                        <></>
+                    }
+                        
                 </View>
             </LinearGradient>
-            {isPhotoPicking ? 
-                <PhotoProfilePickBlured handleBack={handleClickPhoto}/> :
-                <></>
-            }
-            
-        </View>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
     container_bg: {
         flex: 1,
+    },      
+    scroll_ctn: {
+        flex: 1,
+    },
+    scroll_ctn_content: {
+        minHeight: '100%',
+        //justifyContent: 'space-between'
     },
     header_container: {
-        flex: 18,
+        height: '15%',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
@@ -107,9 +113,8 @@ const styles = StyleSheet.create({
         marginLeft:10
     },
     back_container: {
-        flex: 10,
         justifyContent: 'center',
-        alignItems:'center'
+        alignItems:'center',
     },
     back_text: {
         fontSize: 16,

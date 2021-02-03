@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet, Alert, View } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, Alert, View, KeyboardAvoidingView } from 'react-native'
 import { useEffect } from 'react/cjs/react.development'
 // COMPS
 import TitleHeader from '../components/header/TitleHeader'
@@ -14,6 +14,7 @@ import VisibilityForm from '../components/list/creation/VisibilityForm'
 import PhotoListPickBlured from '../components/photo_picker/PhotoListPickBlured'
 import PhotoListHorizontalPickBlured from '../components/photo_picker/PhotoListHorizontalPickBlured'
 import LoadingBlured from '../components/utils/LoadingBlured'
+import TrashButton from '../components/utils/TrashButton'
 // UTILS
 import { delete_main_image_from_storage, delete_cover_image_from_storage } from '../utils/storage/manage_storage'
 import { save_list_after_edit, delete_list } from '../utils/database/manage_database'
@@ -21,7 +22,6 @@ import { save_list_after_edit, delete_list } from '../utils/database/manage_data
 import { useSelector } from 'react-redux'
 // DEPENDENCIES
 import { useNavigation } from '@react-navigation/native'
-import TrashButton from '../components/utils/TrashButton'
 
 
 const MyListEdit = (props) => {
@@ -125,8 +125,6 @@ const MyListEdit = (props) => {
                     text: "oui",
                     onPress: () => {
                         delete_list(UserData.userID, listId)
-                        delete_main_image_from_storage(listId, UserData.userID)
-                        delete_cover_image_from_storage(listId, UserData.userID)
                         navigation.navigate("HomeScreen")                    
                     }
                 }
@@ -134,6 +132,7 @@ const MyListEdit = (props) => {
     }
 
     return (
+        
         <SafeAreaView style={{flex:1}}>
             <TitleHeader title="Paramètres"/>
             <ScrollView style={styles.scroll_ctn} contentContainerStyle={styles.scroll_ctn_content}>
