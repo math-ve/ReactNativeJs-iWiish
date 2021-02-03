@@ -18,14 +18,14 @@ The application will offer a "mini social network" aspect, a bit like an instagr
 
 The application is much more complex but I do not want to reveal everything here. If you want more information about it feel free to contact me : ***mathieu.vaneynde@gmail.com***
 
-## Some visuals
-
-![](/git_assets/img_0.png)
-![](/git_assets/img_1.png)
-![](/git_assets/img_2.png)
-
 ## How am I building it ?
 
 The application will be built in ***react-native***. 
 
 All the backend aspect is contained on ***Firebase***.
+
+## Some visuals
+
+![](/git_assets/img_0.png)
+![](/git_assets/img_1.png)
+![](/git_assets/img_2.png)
